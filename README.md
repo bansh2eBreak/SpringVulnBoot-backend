@@ -5,7 +5,7 @@ Java靶场 -- SpringVulnBoot
 
 ![img.png](img.png)
 
-本次更新：
+本次更新（2025/01/21）：
 - 增加了登录认证，通过spring框架的Interceptor+WebMvcConfigurer配置类实现登录校验
 - 实现了管理员登录Jwt会话的生产和验证逻辑
 - 抛弃原始前端框架的Cookie技术，改为从LocalStorage中读写
