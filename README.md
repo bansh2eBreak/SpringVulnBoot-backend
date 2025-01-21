@@ -7,9 +7,10 @@ Java靶场 -- SpringVulnBoot
 
 本次更新（2025/01/21）：
 - 增加了登录认证，通过spring框架的Interceptor+WebMvcConfigurer配置类实现登录校验
-- 实现了管理员登录Jwt会话的生产和验证逻辑
+- 实现了管理员登录Jwt会话的生成和验证逻辑
 - 抛弃原始前端框架的Cookie技术，改为从LocalStorage中读写
 - 完成前端登录后的头像获取
+- 增加了任意命令执行和任意URL跳转漏洞
 
 靶场已编写的漏洞有：
 - SQLi注入
