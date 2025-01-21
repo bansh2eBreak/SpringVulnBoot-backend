@@ -5,13 +5,18 @@ Java靶场 -- SpringVulnBoot
 
 ![img.png](img.png)
 
-当前项目包含的漏洞有：
+本次更新：
+- 增加了登录认证，通过spring框架的Interceptor+WebMvcConfigurer配置类实现登录校验
+- 实现了管理员登录Jwt会话的生产和验证逻辑
+- 抛弃原始前端框架的Cookie技术，改为从LocalStorage中读写
+
+靶场已编写的漏洞有：
 - SQLi注入
 - XSS跨站脚本
 - 任意命令执行
 - 任意URL跳转
 
-后续会继续更新其他漏洞，欢迎大家提供更多的漏洞案例，包括不限于：
+未完待续：
 - 文件上传漏洞
 - SSRF漏洞
 - CSRF漏洞
