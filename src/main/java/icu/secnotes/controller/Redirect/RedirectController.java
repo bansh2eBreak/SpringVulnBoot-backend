@@ -1,5 +1,6 @@
 package icu.secnotes.controller.Redirect;
 
+import icu.secnotes.pojo.Result;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

@@ -44,7 +44,7 @@ public class StoredController {
     /**
      * ESAPI安全工具包防御xss
      */
-    @GetMapping("/addMessageSec")
+    @PostMapping("/addMessageSec")
     public Result addMessageSec(@RequestBody MessageBoard messageBoard) {
         if (messageBoard.getMessage() == null || "".equals(messageBoard.getMessage())) {
             log.error("留言内容不能为空");
@@ -52,6 +52,7 @@ public class StoredController {
         }
 
         // ESAPI安全工具包防御xss
+        System.out.println(ESAPI.encoder().encodeForHTML(messageBoard.getMessage()));
         messageBoard.setMessage(ESAPI.encoder().encodeForHTML(messageBoard.getMessage()));
         messageBoardService.insertMessage(messageBoard);
         return Result.success();

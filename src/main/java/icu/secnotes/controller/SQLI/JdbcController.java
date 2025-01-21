@@ -283,7 +283,7 @@ public class JdbcController {
         Connection conn = DriverManager.getConnection(db_url, db_user, db_pass);
 
         //3.定义sql语句
-        String sql = "select id, username, name from user where username = '" + username + "'";
+        String sql = "select id, username, name, password from user where username = '" + username + "'";
 
         //4.获取statement对象
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -296,7 +296,7 @@ public class JdbcController {
             user.setId(resultSet.getInt("id"));
             user.setName(resultSet.getString("name"));
             user.setUsername(resultSet.getString("username"));
-
+            user.setPassword(resultSet.getString("password"));
             users.add(user);
         }
         resultSet.close();

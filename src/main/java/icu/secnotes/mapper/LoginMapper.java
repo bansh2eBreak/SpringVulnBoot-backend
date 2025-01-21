@@ -13,15 +13,13 @@ public interface LoginMapper {
      * @param admin
      * @return
      */
-    @Select("select id, username, token, avator from admin where username = #{username} and password = #{password}")
+    @Select("select * from admin where username = #{username} and password = #{password}")
     Admin login(Admin admin);
 
     /**
-     * 根据用户token获取用户信息
-     * @param token
-     * @return
+     * 根据id获取管理员信息
      */
-    @Select("select * from Admin where token = #{token}")
-    Admin getAdminByToken(@Param("token") String token);
+    @Select("select * from admin where id = #{id}")
+    Admin getAdminById(@Param("id") String id);
 
 }

@@ -40,6 +40,16 @@ public class MybatisController {
         return Result.success(userService.selectUserById(id));
     }
 
+    @GetMapping("/getUserByIdSec")
+    public Result getUserByIdSec(String id) {
+        if (!Security.checkSql(id)) {
+            return Result.success(userService.selectUserById(id));
+        } else {
+            log.warn("检测到非法注入字符: {}", id);
+            return Result.error("检测到非法注入");
+        }
+    }
+
     /**
      * Mybatis：字符型sql注入-路径参数
      * @Poc http://127.0.0.1:8080/sqlin/getUserByUsername/lisi' or 'f'='f
@@ -56,16 +66,16 @@ public class MybatisController {
      * @param username
      * @return
      */
-    @GetMapping("/getUserSecByUsername")
-    public Result getUserSecByUsername(String username) {
+    @GetMapping("/getUserSecByUsername2")
+    public Result getUserSecByUsername2(String username) {
         return Result.success(userService.selecctUserSecByUsername(username));
     }
 
     /**
      * Mybatis：恶意字符过滤
      */
-    @GetMapping("/getUserSecByUsernameFilter")
-    public Result getUserSecByUsernameFilter(String username) {
+    @GetMapping("/getUserSecByUsernameFilter2")
+    public Result getUserSecByUsernameFilter2(String username) {
         if (!Security.checkSql(username)) {
             return Result.success(userService.selecctUserByUsername(username));
         } else {

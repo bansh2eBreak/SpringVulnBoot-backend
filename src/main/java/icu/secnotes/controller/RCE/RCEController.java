@@ -1,5 +1,6 @@
 package icu.secnotes.controller.RCE;
 
+import icu.secnotes.pojo.Result;
 import icu.secnotes.utils.Security;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 @RestController
 @Slf4j
@@ -19,12 +21,14 @@ public class RCEController {
      * @return  返回命令执行结果
      */
     @GetMapping("/vulnPing")
-    public String vulnPing(String ip) {
+    public Result vulnPing(String ip) {
+        System.out.println(ip);
         String line;    // 用于保存命令执行结果
         StringBuilder sb = new StringBuilder();
 
         // 要执行的命令
         String[] cmd = {"bash" , "-c", "ping " + ip};
+        log.info("执行的命令: {}", Arrays.toString(cmd));
 
         try {
             // 执行命令并获取进程
@@ -49,7 +53,7 @@ public class RCEController {
             e.printStackTrace();
         }
         //将命令执行结果或者错误结果输出
-        return sb.toString();
+        return Result.success(sb.toString());
     }
 
     /**
@@ -58,10 +62,10 @@ public class RCEController {
      * @return
      */
     @GetMapping("/secPing")
-    public String secPing(String ip) {
+    public Result secPing(String ip) {
         if (Security.checkCommand(ip)) {
             log.warn("非法字符：{}", ip);
-            return "检测到非法命令注入！";
+            return Result.error("检测到非法命令注入！");
         }
 
         String line;
@@ -69,6 +73,7 @@ public class RCEController {
 
         // 要执行的命令
         String[] cmd = {"bash" , "-c", "ping " + ip};
+        log.info("执行的命令: {}", Arrays.toString(cmd));
 
         try {
             // 执行命令并获取进程
@@ -93,7 +98,7 @@ public class RCEController {
             e.printStackTrace();
         }
         //将命令执行结果或者错误结果输出
-        return sb.toString();
+        return Result.success(sb.toString());
     }
 
     /**
@@ -102,12 +107,13 @@ public class RCEController {
      * @return
      */
     @GetMapping("/vulnPing2")
-    public String vulnPing2(String ip) {
+    public Result vulnPing2(String ip) {
         String line;
         StringBuilder sb = new StringBuilder();
 
         // 要执行的命令
         String[] cmd = {"bash" , "-c", "ping " + ip};
+        log.info("执行的命令: {}", Arrays.toString(cmd));
 
         try {
             // 执行命令并获取进程
@@ -140,7 +146,7 @@ public class RCEController {
             e.printStackTrace();
         }
         //将命令执行结果或者错误结果输出
-        return sb.toString();
+        return Result.success(sb.toString());
     }
 
     /**
@@ -149,13 +155,14 @@ public class RCEController {
      * @return
      */
     @GetMapping("/secPing2")
-    public String secPing2(String ip) {
+    public Result secPing2(String ip) {
         if (Security.checkIp(ip)) {
             String line;
             StringBuilder sb = new StringBuilder();
 
             // 要执行的命令
             String[] cmd = {"bash" , "-c", "ping " + ip};
+            log.info("执行的命令: {}", Arrays.toString(cmd));
 
             try {
                 // 执行命令并获取进程
@@ -187,10 +194,10 @@ public class RCEController {
                 e.printStackTrace();
             }
             //将命令执行结果或者错误结果输出
-            return sb.toString();
+            return Result.success(sb.toString());
         } else {
             log.warn("IP地址不合法：{}", ip);
-            return "IP地址不合法！";
+            return Result.error("IP地址不合法！");
         }
     }
 }

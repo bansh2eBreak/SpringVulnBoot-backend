@@ -15,7 +15,7 @@ public interface UserMapper {
      * @param id
      * @return
      */
-    @Select("select id, username, name from user where id = ${id}")
+    @Select("select * from user where id = ${id}")
     List<User> selectUserById(String id);
 
     /**
@@ -23,7 +23,7 @@ public interface UserMapper {
      * @param username
      * @return
      */
-    @Select("select id, username, name from user where username = '${username}'")
+    @Select("select * from user where username = '${username}'")
     List<User> selectUserByUsername(@Param("username") String username);
 
     /**

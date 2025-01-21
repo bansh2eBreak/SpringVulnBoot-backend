@@ -48,7 +48,7 @@ public class Result {
 
     // 用于返回查询操作成功的结果
     public static Result success(){
-        return new Result(1,"success", null);
+        return new Result(0,"success", null);
     }
 
     // 用于返回操作失败的结果

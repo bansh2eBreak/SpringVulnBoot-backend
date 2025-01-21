@@ -18,7 +18,8 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public Admin getUserByToken(String token) {
-        return loginMapper.getAdminByToken(token);
+    public Admin getAdminById(String id) {
+        return loginMapper.getAdminById(id);
     }
+
 }
