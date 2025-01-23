@@ -46,4 +46,10 @@ public interface UserMapper {
     @Select("select * from user order by ${orderBy} limit #{start}, #{pageSize}")
     List<User> pageOrderBy(@Param("orderBy") String orderBy, @Param("start") int start, @Param("pageSize") int pageSize);
 
+    /**
+     * 账号密码登录
+     */
+    @Select("select * from user where username = #{username} and password = #{password}")
+    User passwordLogin(User user);
+
 }

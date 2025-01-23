@@ -12,4 +12,6 @@ public interface UserService {
     PageBean pageOrderBy(String orderBy, Integer page, Integer pageSize);
 
     List<User> selecctUserSecByUsername(String username);
+
+    User passwordLogin(User user);
 }
