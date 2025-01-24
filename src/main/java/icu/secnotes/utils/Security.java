@@ -2,6 +2,8 @@ package icu.secnotes.utils;
 
 import org.springframework.util.StringUtils;
 
+import java.util.Base64;
+
 /**
  * 安全工具类
  */
@@ -66,4 +68,18 @@ public class Security {
         }
         return true;
     }
+
+    /**
+     * HTTP Basic Auth认证信息解码
+     */
+    public static String[] decodeBasicAuth(String token) {
+        if (token != null && token.startsWith("Basic ")) {
+            String base64Credentials = token.substring(6).trim();
+            byte[] decodedBytes = Base64.getDecoder().decode(base64Credentials);
+            String credentials = new String(decodedBytes);
+            return credentials.split(":", 2); // 返回 [username, password]
+        }
+        return null;
+    }
+
 }

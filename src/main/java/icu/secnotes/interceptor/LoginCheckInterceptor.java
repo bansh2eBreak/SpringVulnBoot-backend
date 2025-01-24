@@ -3,6 +3,7 @@ package icu.secnotes.interceptor;
 import com.alibaba.fastjson.JSONObject;
 import icu.secnotes.pojo.Result;
 import icu.secnotes.utils.JwtUtils;
+import icu.secnotes.utils.Security;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,10 +33,42 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
 
         //2.判断请求url中是否login，如果包含说明是登录操作
         //但是，因为在WebConfig类中进行配置：.addPathPatterns("/**").excludePathPatterns("/login");，所以下面的判断方法永远不会执行
-        if (url.contains("login")){
+        if (url.contains("login") || url.contains("httpBasicLogin")){
             log.info("登录操作，放行");
             return true;
         }
+
+//        if (url.contains("httpBasicLogin1")){
+//            String USERNAME = "zhangsan"; // 硬编码用户名
+//            String PASSWORD = "123"; // 硬编码密码
+//
+//            // 处理HTTP Basic Auth登录
+//            String token = request.getHeader("token");
+//            if (token == null || !token.startsWith("Basic ")) {
+//                log.info("HTTP Basic Auth登录，token缺失或者token格式错误");
+////                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                response.setHeader("WWW-Authenticate", "Basic realm=\"Access to the site\"");
+//                return false;
+//            }
+//
+//            String[] credentials = Security.decodeBasicAuth(token);
+//            if (credentials == null || credentials.length != 2) {
+////                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                return false;
+//            }
+//
+//            String username = credentials[0];
+//            String password = credentials[1];
+//
+//            if (!USERNAME.equals(username) || !PASSWORD.equals(password)) {
+//                log.info("HTTP Basic Auth登录，账号密码错误，token：{}" , token);
+////                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                return false;
+//            }
+//
+//            log.info("HTTP Basic Auth登录，放行，token：{}" , token);
+//            return true; // 认证通过
+//        }
 
         //3.获取请求头的令牌
         String jwttoken = request.getHeader("Authorization");

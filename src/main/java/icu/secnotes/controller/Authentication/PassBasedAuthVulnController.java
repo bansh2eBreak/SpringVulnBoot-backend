@@ -4,7 +4,9 @@ import icu.secnotes.pojo.Result;
 import icu.secnotes.pojo.User;
 import icu.secnotes.service.UserLoginLogService;
 import icu.secnotes.service.UserService;
+import icu.secnotes.utils.Security;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -101,4 +103,37 @@ public class PassBasedAuthVulnController {
             return Result.success("登录失败，账号：" + user.getUsername() + "，密码：" + user.getPassword());
         }
     }
+
+    /**
+     * 基于HTTP Basic认证的用户登录
+     */
+    @PostMapping("/httpBasicLogin")
+    public Result httpBasicLogin(HttpServletRequest request, HttpServletResponse response) {
+        String USERNAME = "zhangsan"; // 硬编码用户名
+        String PASSWORD = "123"; // 硬编码密码
+
+        // 处理HTTP Basic Auth登录
+        String token = request.getHeader("token");
+        if (token == null || !token.startsWith("Basic ")) {
+            log.info("HTTP Basic Auth登录，token缺失或者token格式错误");
+            return Result.success("HTTP Basic Auth登录，token缺失或者token格式错误");
+        }
+
+        String[] credentials = Security.decodeBasicAuth(token);
+        if (credentials == null || credentials.length != 2) {
+            return Result.success("HTTP Basic Auth登录，token解析失败");
+        }
+
+        String username = credentials[0];
+        String password = credentials[1];
+
+        if (!USERNAME.equals(username) || !PASSWORD.equals(password)) {
+            log.info("HTTP Basic Auth登录，账号密码错误，token：{}" , token);
+            return Result.success("HTTP Basic Auth登录失败，账号：" + username + "，密码：" + password);
+        }
+
+        log.info("HTTP Basic Auth登录，放行，token：{}" , token);
+        return Result.success("HTTP Basic Auth登录成功，账号：" + username + "，密码：" + password);
+    }
+
 }

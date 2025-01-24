@@ -8,7 +8,4 @@ spring:
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
-whiteUrlList:
-  - https://www.google.com
-  - http://www.google.com
+    
