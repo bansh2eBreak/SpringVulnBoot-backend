@@ -18,11 +18,21 @@ SpringBoot靶场后端工程：SpringVulnBoot-backend
 
 靶场已编写的漏洞有：
 - SQLi注入
+  - 基于Jdbc的SQLi注入
+  - 基于Mybatis的SQLi注入
 - XSS跨站脚本
+  - 反射型XSS
+  - 存储型XSS
 - 任意命令执行
+  - Runtime方式
+  - ProcessBuilder方式
 - 任意URL跳转
 - 身份认证漏洞 
-  - 密码登录-暴力破解（包含图形验证码的漏洞）
+  - 密码登录暴力破解
+    - 普通的账号密码登录暴力破解
+    - 绕过单IP限制暴力破解
+    - HTTP Basic认证登录暴力破解
+    - 图形验证码登录暴力破解
 
 未完待续：
 - 文件上传漏洞
