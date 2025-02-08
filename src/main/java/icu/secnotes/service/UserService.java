@@ -14,4 +14,6 @@ public interface UserService {
     List<User> selecctUserSecByUsername(String username);
 
     User passwordLogin(User user);
+
+    User passwordLogin2(String username, String password);
 }

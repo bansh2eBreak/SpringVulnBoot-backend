@@ -1,15 +1,22 @@
 package icu.secnotes.controller.Authentication;
 
+import com.google.code.kaptcha.impl.DefaultKaptcha;
 import icu.secnotes.pojo.Result;
 import icu.secnotes.pojo.User;
 import icu.secnotes.service.UserLoginLogService;
 import icu.secnotes.service.UserService;
 import icu.secnotes.utils.Security;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 @RestController
@@ -19,6 +26,9 @@ public class PassBasedAuthVulnController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private DefaultKaptcha defaultKaptcha;
 
     @Autowired
     private UserLoginLogService userLoginLogService;
@@ -134,6 +144,109 @@ public class PassBasedAuthVulnController {
 
         log.info("HTTP Basic Auth登录，放行，token：{}" , token);
         return Result.success("HTTP Basic Auth登录成功，账号：" + username + "，密码：" + password);
+    }
+
+    @GetMapping("/captcha")
+    public void getCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.info("有人请求验证码了.....");
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+        response.addHeader("Cache-Control", "post-check=0, pre-check=0");
+        response.setHeader("Pragma", "no-cache");
+        response.setContentType("image/jpeg");
+
+        // 生成验证码文本
+        String capText = defaultKaptcha.createText();
+        // 将验证码文本存储到 Session
+        HttpSession session = request.getSession();
+        System.out.println("存储时候的session对象" + session);
+        session.setAttribute("captcha", capText);
+        // 生成验证码图片
+        BufferedImage bi = defaultKaptcha.createImage(capText);
+        ServletOutputStream out = response.getOutputStream();
+        ImageIO.write(bi, "jpg", out);
+        out.flush();
+        out.close();
+
+        System.out.println("获取验证码接口-----》Stored captcha in session: " + session.getAttribute("captcha"));
+    }
+
+    @PostMapping("/vuln3")
+    public Result passwordLoginVuln3( @RequestParam String username, // 接收用户名
+                                             @RequestParam String password, // 接收密码
+                                             @RequestParam String captcha,  // 接收验证码
+                                             HttpServletRequest request) {
+
+        //获取服务端生成的验证码
+        HttpSession session = request.getSession();
+        System.out.println("读取时候的session对象" + session);
+
+        // 从 Session 中获取验证码
+        System.out.println("登录接口-------》提交的验证码：" + captcha);
+        System.out.println("登录接口-------》Stored captcha in session: " + session.getAttribute("captcha"));
+
+        String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
+        // 校验验证码
+        if (sessionCaptcha == null || !sessionCaptcha.equalsIgnoreCase(captcha)) {
+            return Result.success("验证码错误");
+        }
+
+        // 校验用户名和密码
+        User u = userService.passwordLogin2(username, password);
+
+        if (u != null) {
+            // 登录成功
+            log.info("{} 登录成功！", u.getUsername());
+            return Result.success("登录成功，账号：" + username + "，密码：" + password);
+        } else {
+            // 登录失败
+            log.error("登录失败，账号密码是：{},{}", username, password);
+            return Result.success("登录失败，账号：" + username + "，密码：" + password);
+        }
+    }
+
+    /**
+     * 用户登录，通过图形验证码防刷（简单实现图形验证码）
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    @PostMapping("/sec2")
+    public Result passwordLoginSecByCaptcha( @RequestParam String username, // 接收用户名
+                                            @RequestParam String password, // 接收密码
+                                            @RequestParam String captcha,  // 接收验证码
+                                            HttpServletRequest request) {
+
+        //获取服务端生成的验证码
+        HttpSession session = request.getSession();
+        System.out.println("读取时候的session对象" + session);
+
+        // 从 Session 中获取验证码
+        System.out.println("登录接口-------》提交的验证码：" + captcha);
+        System.out.println("登录接口-------》Stored captcha in session: " + session.getAttribute("captcha"));
+
+        String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
+        // 校验验证码
+        if (sessionCaptcha == null || !sessionCaptcha.equalsIgnoreCase(captcha)) {
+            return Result.success("验证码错误，账号：" + username + "，密码：" + password);
+        }
+
+        // 清除验证码
+        session.removeAttribute("captcha");
+
+        // 校验用户名和密码
+        User u = userService.passwordLogin2(username, password);
+
+        if (u != null) {
+            // 登录成功
+            log.info("{} 登录成功！", u.getUsername());
+            return Result.success("登录成功，账号：" + username + "，密码：" + password);
+        } else {
+            // 登录失败
+            log.error("登录失败，账号密码是：{},{}", username, password);
+            return Result.success("登录失败，账号：" + username + "，密码：" + password);
+        }
     }
 
 }

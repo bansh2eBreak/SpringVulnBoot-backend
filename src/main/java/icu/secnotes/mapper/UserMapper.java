@@ -52,4 +52,7 @@ public interface UserMapper {
     @Select("select * from user where username = #{username} and password = #{password}")
     User passwordLogin(User user);
 
+    @Select("select * from user where username = #{username} and password = #{password}")
+    User passwordLogin2(String username, String password);
+
 }
