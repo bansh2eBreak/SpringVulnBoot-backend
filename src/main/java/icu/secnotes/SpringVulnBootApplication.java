@@ -9,6 +9,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 public class SpringVulnBootApplication {
 
     public static void main(String[] args) {
+        System.setProperty("com.sun.jndi.rmi.object.trustURLCodebase", "true");
+        System.setProperty("com.sun.jndi.ldap.object.trustURLCodebase", "true");
         SpringApplication.run(SpringVulnBootApplication.class, args);
     }
 

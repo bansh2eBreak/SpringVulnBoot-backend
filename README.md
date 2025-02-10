@@ -13,7 +13,10 @@ SpringBoot靶场后端工程：SpringVulnBoot-backend
 ![img_2.png](img_2.png)
 ![img_3.png](img_3.png)
 
-本次更新（2025/02/08）：
+## 更新日志
+本次更新（2025/02/10）：
+- 增加组件漏洞-Fastjson漏洞，并可以前端直接复现
+2025/02/08：
 - 增加身份认证漏洞-密码登录暴力破解漏洞，包括普通的账号密码登录、HTTP Basic认证登录、带图形验证码登录几种场景。
 
 靶场已编写的漏洞有：
@@ -33,6 +36,8 @@ SpringBoot靶场后端工程：SpringVulnBoot-backend
     - 绕过单IP限制暴力破解
     - HTTP Basic认证登录暴力破解
     - 图形验证码登录暴力破解
+- 组件漏洞
+  - Fastjson漏洞
 
 未完待续：
 - 文件上传漏洞
