@@ -26,16 +26,16 @@ public class FastjsonController {
         }
     }
 
-        @PostMapping("/fastjsonSec1")
-        public Result fastjsonSec1(@RequestBody String json) {
-            log.info("请求参数: {}", json);
-            // 进行fastjson反序列化，需要对下面的代码进行try catch异常处理
-            try {
-                Object object = JSON.parseObject(json, User.class);
-                return Result.success(object.toString());
-            } catch (Exception e) {
-                return Result.error(e.toString());
-            }
+    @PostMapping("/fastjsonSec1")
+    public Result fastjsonSec1(@RequestBody String json) {
+        log.info("请求参数: {}", json);
+        // 进行fastjson反序列化，需要对下面的代码进行try catch异常处理
+        try {
+            Object object = JSON.parseObject(json, User.class);
+            return Result.success(object.toString());
+        } catch (Exception e) {
+            return Result.error(e.toString());
         }
+    }
 
 }
