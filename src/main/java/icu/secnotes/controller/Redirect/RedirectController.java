@@ -26,7 +26,7 @@ public class RedirectController {
             response.sendRedirect(url);
         } else {
             // 处理 URL 为空的情况，例如跳转到默认页面
-            response.sendRedirect("http://localhost:9528/?#/dashboard");
+            response.sendRedirect("http://127.0.0.1:9528/?#/dashboard");
         }
     }
 
