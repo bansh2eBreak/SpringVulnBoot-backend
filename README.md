@@ -22,7 +22,7 @@ SpringBoot靶场后端工程：SpringVulnBoot-backend ,环境是基于JDK11 + Sp
 2025/02/08：
 - 增加身份认证漏洞-密码登录暴力破解漏洞，包括普通的账号密码登录、HTTP Basic认证登录、带图形验证码登录几种场景。
 
-靶场已编写的漏洞有：
+## 靶场已编写的漏洞
 - SQLi注入
   - 基于Jdbc的SQLi注入
   - 基于Mybatis的SQLi注入
@@ -43,7 +43,7 @@ SpringBoot靶场后端工程：SpringVulnBoot-backend ,环境是基于JDK11 + Sp
   - Fastjson漏洞
   - Log4j2漏洞
 
-未完待续：
+## 未完待续
 - 文件上传漏洞
 - SSRF漏洞
 - CSRF漏洞
