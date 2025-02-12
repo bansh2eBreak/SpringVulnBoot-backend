@@ -1,4 +1,4 @@
-package icu.secnotes.controller.components;
+package icu.secnotes.controller.Components;
 
 import icu.secnotes.pojo.Result;
 import icu.secnotes.utils.Security;

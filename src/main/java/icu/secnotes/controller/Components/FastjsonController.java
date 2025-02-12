@@ -1,4 +1,4 @@
-package icu.secnotes.controller.components;
+package icu.secnotes.controller.Components;
 
 import com.alibaba.fastjson.JSON;
 import icu.secnotes.pojo.Result;

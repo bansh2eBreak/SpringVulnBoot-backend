@@ -1,12 +1,9 @@
 package icu.secnotes.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import icu.secnotes.controller.components.Log4j2Controller;
 import icu.secnotes.pojo.Result;
 import icu.secnotes.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
