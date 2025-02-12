@@ -41,6 +41,7 @@ SpringBoot靶场后端工程：SpringVulnBoot-backend ,环境是基于JDK11 + Sp
     - 图形验证码登录暴力破解
 - 组件漏洞
   - Fastjson漏洞
+  - Log4j2漏洞
 
 未完待续：
 - 文件上传漏洞
