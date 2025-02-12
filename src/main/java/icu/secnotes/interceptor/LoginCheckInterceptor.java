@@ -1,17 +1,18 @@
 package icu.secnotes.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
+import icu.secnotes.controller.components.Log4j2Controller;
 import icu.secnotes.pojo.Result;
 import icu.secnotes.utils.JwtUtils;
-import icu.secnotes.utils.Security;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Component
 @Slf4j
@@ -128,7 +129,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        System.out.println("postHandle...");
+//        System.out.println("postHandle...");
     }
 
     /**
@@ -141,6 +142,6 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        System.out.println("afterCompletion...");
+//        System.out.println("afterCompletion...");
     }
 }

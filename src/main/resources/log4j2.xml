@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <!--status：设置的是 Log4j 2 内部 的日志记录级别-->
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <!--level：设置的是 应用 的日志记录级别。-->
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

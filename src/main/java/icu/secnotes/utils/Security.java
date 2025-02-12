@@ -82,4 +82,12 @@ public class Security {
         return null;
     }
 
+    /**
+     * 过滤Log4j2日志中的特殊字符
+     */
+    public static boolean checkLog4j2(String content) {
+        // 检查是否存在Log4j2日志中的特殊字符
+        return !content.matches(".*[&${:}<>\"].*");
+    }
+
 }

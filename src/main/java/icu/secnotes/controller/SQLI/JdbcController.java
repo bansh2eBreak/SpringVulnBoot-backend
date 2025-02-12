@@ -20,6 +20,13 @@ import java.util.List;
 @RestController
 public class JdbcController {
 
+    /**
+     * 下面解释为啥简单的使用 @Slf4j 注解就可以在项目中使用logback打印日志了？
+     * @Slf4j 注解是 Lombok 库提供的一个注解，它可以自动为你的类生成一个 log 静态变量，类型为 org.slf4j.Logger。
+     * 当你使用 @Slf4j 注解后，Lombok 会在编译时自动生成类似于 private static final Logger log = LoggerFactory.getLogger(YourClass.class); 的代码。
+     * 因此，你就可以直接在类中使用 log.info("...")、log.debug("...") 等方法来打印日志，而无需手动创建 Logger 对象。
+     */
+
     @Value("${spring.datasource.url}")
     private String db_url;
 

@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-@RequestMapping("/components")
+@RequestMapping("/components/fastjson")
 public class FastjsonController {
 
-    @PostMapping("/fastjsonVuln1")
+    @PostMapping("/vuln1")
     public Result fastjsonVuln1(@RequestBody String json) {
         log.info("请求参数: {}", json);
         // 进行fastjson反序列化，需要对下面的代码进行try catch异常处理
@@ -26,7 +26,7 @@ public class FastjsonController {
         }
     }
 
-    @PostMapping("/fastjsonSec1")
+    @PostMapping("/sec1")
     public Result fastjsonSec1(@RequestBody String json) {
         log.info("请求参数: {}", json);
         // 进行fastjson反序列化，需要对下面的代码进行try catch异常处理
