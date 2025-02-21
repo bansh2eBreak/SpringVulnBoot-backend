@@ -1,12 +1,11 @@
 # SpringVulnBoot Backend
 
 ## 项目介绍
-SpringBoot靶场后端工程：SpringVulnBoot-backend ,环境是基于JDK11 + SpringBoot 2.7.14构建。
- 
-通过Springboot打造的java安全靶场，尽可能编写出各种常见的漏洞，供大家学习和测试。<br>
+
+基于 Vue + SpringBoot 构建的 Java 安全靶场，一个专为安全爱好者、开发人员和渗透测试人员打造的实战演练平台。
 
 1. 前端是基于流行的vue-admin-template基础模板进行改改改，[前端工程](https://github.com/bansh2eBreak/SpringVulnBoot-frontend)
-2. 后端是基于springboot开发的，[后端工程](https://github.com/bansh2eBreak/SpringVulnBoot-backend)
+2. 后端是基于SpringBoot 2.7.14开发的，[后端工程](https://github.com/bansh2eBreak/SpringVulnBoot-backend)
 
 ## 效果图
 ![img_1.png](images/img_1.png)
