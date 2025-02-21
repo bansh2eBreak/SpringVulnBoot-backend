@@ -27,7 +27,7 @@ public class PathTraversalController {
 
         /**
          * 1）项目的根目录通常是指包含pom.xml文件的目录
-         *      -- 打印文件路径可知：/Users/liujianping/IdeaProjects/SpringVulnBoot/images/img.png
+         *      -- 打印文件路径可知：/Users/liujianping/IdeaProjects/SpringVulnBoot/images/img_6.png
          * 2）如果是读取resources下面的图片呢
          *      File file = new File("src/main/resources/images/" + filename);
          */
