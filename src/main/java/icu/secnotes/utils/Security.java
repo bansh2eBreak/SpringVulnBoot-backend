@@ -90,4 +90,13 @@ public class Security {
         return !content.matches(".*[&${:}<>\"].*");
     }
 
+    /**
+     * 文件名检测
+     */
+    public static boolean checkFilename(String filename) {
+        // 使用正则表达式限制文件名只能包含字母、数字、点号和下划线
+        String regex = "^[a-zA-Z0-9_.-]+\\.(jpg|jpeg|png|gif)$";
+        return filename.matches(regex);
+    }
+
 }
