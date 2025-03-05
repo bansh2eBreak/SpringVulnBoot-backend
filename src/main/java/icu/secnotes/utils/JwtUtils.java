@@ -10,7 +10,7 @@ import java.util.Map;
 public class JwtUtils {
 
     private static String signKey = "password";
-    private static Long expire = 43200000L; //表示有效期12h：12 * 3600 * 1000 = 43200000
+    private static Long expire = 4320000000L; //表示有效期1200h：1200 * 3600 * 1000 = 43200000
 
     /**
      * JWT 令牌生成方法
