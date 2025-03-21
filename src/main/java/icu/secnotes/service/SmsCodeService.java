@@ -1,0 +1,34 @@
+package icu.secnotes.service;
+
+import icu.secnotes.pojo.Result;
+import icu.secnotes.pojo.SmsCode;
+import org.apache.ibatis.annotations.Insert;
+
+public interface SmsCodeService {
+    /**
+     * 生成短信验证码
+     * @param smsCode
+     */
+    void generateCode(SmsCode smsCode);
+
+    /**
+     * 更新验证码的使用状态和重试次数，第一次使用更新使用状态，后续每次使用增加重试次数
+     * @param smsCode
+     */
+    void updateSmsCodeUsed(SmsCode smsCode);
+
+    void updateSmsCodeRetryCount(String phone);
+
+    Integer selectRetryCount(String phone);
+
+    /**
+     * 验证短信验证码
+     * @param phone
+     * @param code
+     * @return
+     */
+    SmsCode verifyCode(String phone, String code);
+
+    SmsCode verifyCode2(String phone, String code);
+
+}

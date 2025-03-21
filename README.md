@@ -16,9 +16,14 @@
 ![img_6.png](images/img_6.png)
 ![img_7.png](images/img_7.png)
 ![img_8.png](images/img_8.png)
+![img_9.png](images/img_9.png)
+![img_10.png](images/img_10.png)
 
 ## 更新日志
-2025/03/06（最新更新）：
+2025/03/21（最新更新）：
+- 增加身份认证漏洞-短信验证码相关漏洞
+
+2025/03/06：
 - 增加文件上传漏洞
 
 2025/02/21：
