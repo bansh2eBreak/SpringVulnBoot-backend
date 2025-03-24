@@ -8,6 +8,8 @@
 2. 后端是基于SpringBoot 2.7.14开发的，[后端工程](https://github.com/bansh2eBreak/SpringVulnBoot-backend)
 
 ## 效果图
+![img_9.png](images/img_9.png)
+![img_10.png](images/img_10.png)
 ![img_1.png](images/img_1.png)
 ![img_2.png](images/img_2.png)
 ![img_3.png](images/img_3.png)
@@ -16,8 +18,6 @@
 ![img_6.png](images/img_6.png)
 ![img_7.png](images/img_7.png)
 ![img_8.png](images/img_8.png)
-![img_9.png](images/img_9.png)
-![img_10.png](images/img_10.png)
 
 ## 更新日志
 2025/03/21（最新更新）：
