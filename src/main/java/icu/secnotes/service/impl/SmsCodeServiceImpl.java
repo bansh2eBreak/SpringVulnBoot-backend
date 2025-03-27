@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class SmsCodeServiceImpl implements SmsCodeService {
 
@@ -16,6 +18,11 @@ public class SmsCodeServiceImpl implements SmsCodeService {
     @Override
     public void generateCode(SmsCode smsCode) {
         smsCodeMapper.insertSmsCode(smsCode);
+    }
+
+    @Override
+    public void generateCodeByPhoneAndCode(String phone, String code, LocalDateTime createTime, LocalDateTime expireTime) {
+        smsCodeMapper.insertSmsCodeByPhoneAndCode(phone, code, createTime, expireTime);
     }
 
     @Override

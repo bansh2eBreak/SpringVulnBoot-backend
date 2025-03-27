@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.time.LocalDateTime;
+
 @Mapper
 public interface SmsCodeMapper {
 
@@ -14,6 +16,12 @@ public interface SmsCodeMapper {
      */
     @Insert("insert into sms_code(phone, code, create_time, expire_time) values(#{phone}, #{code}, #{createTime}, #{expireTime})")
     void insertSmsCode(SmsCode smsCode);
+
+    /**
+     * 插入短信验证码，参数是phone和code，其他字段使用默认值
+     */
+    @Insert("insert into sms_code(phone, code, create_time, expire_time) values(#{phone}, #{code}, #{createTime}, #{expireTime})")
+    void insertSmsCodeByPhoneAndCode(String phone, String code, LocalDateTime createTime, LocalDateTime expireTime);
 
     /**
      * 更新验证码的使用状态

@@ -5,6 +5,9 @@ import icu.secnotes.pojo.SmsCode;
 import icu.secnotes.service.SmsCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 
 @RestController
@@ -16,7 +19,7 @@ public class SmsBasedAuthVulnController {
 
     // 发送短信接口:接口直接将验证码返回给前端 + 短信轰炸
     @PostMapping("/sendVuln1")
-    public Result sendVuln1(@RequestBody SmsCode smsCode) {
+    public Result sendVuln1(@Valid @RequestBody SmsCode smsCode) {
         // 生成四位随机数作为验证码
         smsCode.setCode(String.valueOf((int) ((Math.random() * 9 + 1) * 1000)));
         // 设置验证码的创建时间为当前时间
@@ -30,7 +33,7 @@ public class SmsBasedAuthVulnController {
 
     // 发送短信接口:验证码不返回给前端 + 短信轰炸
     @PostMapping("/sendSafe1")
-    public Result sendSafe1(@RequestBody SmsCode smsCode) {
+    public Result sendSafe1(@Valid @RequestBody SmsCode smsCode) {
         // 生成四位随机数作为验证码
         smsCode.setCode(String.valueOf((int) ((Math.random() * 9 + 1) * 1000)));
         // 设置验证码的创建时间为当前时间
@@ -42,9 +45,41 @@ public class SmsBasedAuthVulnController {
         return Result.success("短信验证码已发送");
     }
 
+    // 发送短信接口:图形验证码防短信轰炸
+    @PostMapping("/sendSafe2")
+    public Result sendSafe2(@RequestParam String phone, @RequestParam String captcha, HttpServletRequest request) {
+
+        //获取服务端生成的验证码
+        HttpSession session = request.getSession();
+        System.out.println("读取时候的session对象" + session);
+        // 从 Session 中获取验证码
+        System.out.println("登录接口-------》提交的验证码：" + captcha);
+        System.out.println("登录接口-------》Stored captcha in session: " + session.getAttribute("captcha"));
+        String sessionCaptcha = (String) request.getSession().getAttribute("captcha");
+        // 校验验证码
+        if (sessionCaptcha == null || !sessionCaptcha.equalsIgnoreCase(captcha)) {
+            return Result.success("图形验证码错误");
+        }
+
+        // 清除验证码
+        session.removeAttribute("captcha");
+
+
+        // 生成四位随机数作为验证码
+        String smsCode = String.valueOf((int) ((Math.random() * 9 + 1) * 1000));
+        // 设置验证码的创建时间为当前时间
+        LocalDateTime createTime = LocalDateTime.now();
+        // 设置验证码的过期时间为当前时间加5分钟
+        LocalDateTime expireTime = LocalDateTime.now().plusMinutes(5);
+
+        // 验证的使用状态和重试次数默认是0，所以生成验证码的时候可以不设置
+        smsCodeService.generateCodeByPhoneAndCode(phone, smsCode, createTime, expireTime);
+        return Result.success("短信验证码已发送");
+    }
+
     // 验证短信接口:验证码未限制校验次数，可以暴力破解验证码
     @PostMapping("/verifyVuln1")
-    public Result verifyVuln1(@RequestBody SmsCode smsCode) {
+    public Result verifyVuln1(@Valid @RequestBody SmsCode smsCode) {
         SmsCode code = smsCodeService.verifyCode(smsCode.getPhone(), smsCode.getCode());
         if (code != null) {
             // 设置验证码为已使用
@@ -57,7 +92,7 @@ public class SmsBasedAuthVulnController {
 
     // 验证短信接口:验证码校验次数限制，防止暴力破解
     @PostMapping("/verifySafe1")
-    public Result verifySafe1(@RequestBody SmsCode smsCode) {
+    public Result verifySafe1(@Valid @RequestBody SmsCode smsCode) {
         SmsCode code = smsCodeService.verifyCode(smsCode.getPhone(), smsCode.getCode());
         if (code != null) {
             // 设置验证码为已使用
@@ -77,7 +112,7 @@ public class SmsBasedAuthVulnController {
 
     // 验证短信接口:验证码可重复使用
     @PostMapping("/verifyVuln2")
-    public Result verifyVuln2(@RequestBody SmsCode smsCode) {
+    public Result verifyVuln2(@Valid @RequestBody SmsCode smsCode) {
         // 虽然验证成功后修改了验证码未已使用，但是查询的时候并没有校验使用状态
         SmsCode code = smsCodeService.verifyCode2(smsCode.getPhone(), smsCode.getCode());
         if (code != null) {

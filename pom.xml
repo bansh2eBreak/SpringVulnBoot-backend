@@ -138,6 +138,12 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.14.0</version>
         </dependency>
+
+        <!--Java 的 Bean Validation API 相关依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

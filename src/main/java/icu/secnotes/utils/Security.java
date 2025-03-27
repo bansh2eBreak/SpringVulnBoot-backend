@@ -99,4 +99,28 @@ public class Security {
         return filename.matches(regex);
     }
 
+    /**
+     * 手机号码正则校验
+     */
+    public static boolean checkPhone(String phone) {
+        // 空值检查
+        if (phone == null || phone.isEmpty()) {
+            return false;
+        }
+
+        // 仅允许数字
+        if (!phone.matches("^\\d+$")) {
+            return false;
+        }
+
+        // 长度必须为11位
+        if (phone.length() != 11) {
+            return false;
+        }
+
+        // 号段验证
+        String regex = "^1(3[0-9]|4[5-9]|5[0-3,5-9]|6[6]|7[0-8]|8[0-9]|9[1,8,9])\\d{8}$";
+        return phone.matches(regex);
+    }
+
 }

@@ -4,12 +4,16 @@ import icu.secnotes.pojo.Result;
 import icu.secnotes.pojo.SmsCode;
 import org.apache.ibatis.annotations.Insert;
 
+import java.time.LocalDateTime;
+
 public interface SmsCodeService {
     /**
      * 生成短信验证码
      * @param smsCode
      */
     void generateCode(SmsCode smsCode);
+
+    void generateCodeByPhoneAndCode(String phone, String code, LocalDateTime createTime, LocalDateTime expireTime);
 
     /**
      * 更新验证码的使用状态和重试次数，第一次使用更新使用状态，后续每次使用增加重试次数
