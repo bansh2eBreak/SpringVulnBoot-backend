@@ -1,24 +1,75 @@
--- 创建用户表
-CREATE TABLE User (
-    id INT PRIMARY KEY auto_increment,
-    username VARCHAR(50),
-    name VARCHAR(50),
-    password VARCHAR(50)
+-- 创建管理员表
+create table if not exists Admin
+(
+    id          int auto_increment
+        primary key,
+    name        varchar(10)                                                                                                         not null,
+    username    varchar(50)                                                                                                         not null,
+    password    varchar(50)                                                                                                         not null,
+    token       varchar(255)                                                                                                        null,
+    avatar      varchar(255) default 'https://img1.baidu.com/it/u=3200425930,2413475553&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800' null,
+    create_time datetime                                                                                                            null,
+    constraint username
+        unique (username)
 );
 
 -- 创建留言表
-CREATE TABLE MessageBoard(
-    id INT PRIMARY KEY auto_increment,
-    message VARCHAR(200)
+create table if not exists MessageBoard
+(
+    id      int auto_increment
+        primary key,
+    message varchar(200) null
 );
 
--- 后台管理员表
-CREATE TABLE IF NOT EXISTS Admin (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(50) NOT NULL,
-    token VARCHAR(255),
-    avator VARCHAR(255) DEFAULT 'https://img1.baidu.com/it/u=3200425930,2413475553&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800'
+-- 创建用户表
+create table if not exists User
+(
+    id       int auto_increment
+        primary key,
+    username varchar(50) null,
+    name     varchar(50) null,
+    password varchar(50) null
+);
+
+-- 创建MFA密钥表
+create table if not exists mfa_secret
+(
+    id          int auto_increment
+        primary key,
+    userId      int          not null comment '用户ID',
+    secret      varchar(100) not null comment 'MFA加密串',
+    create_time datetime     null comment '创建时间',
+    update_time datetime     null comment '更新时间',
+    constraint mfa_secret_Admin_id_fk
+        foreign key (userId) references springvulnboot.Admin (id)
+)
+    comment 'MFA密钥表';
+
+create index userId
+    on mfa_secret (userId);
+
+-- 创建短信验证码记录表
+create table if not exists sms_code
+(
+    id          bigint auto_increment
+        primary key,
+    phone       varchar(20)   not null comment '手机号',
+    code        varchar(6)    not null comment '验证码',
+    create_time datetime      not null comment '创建时间',
+    expire_time datetime      not null comment '过期时间',
+    used        int default 0 null comment '是否已使用：0未使用，1已使用',
+    retry_count int default 0 null comment '验证重试次数'
+)
+    comment '短信验证码记录表';
+
+-- 创建用户登录日志表
+create table if not exists user_login_log
+(
+    id        int auto_increment
+        primary key,
+    ip        varchar(50)  not null,
+    username  varchar(255) not null,
+    loginTime datetime     not null
 );
 
 -- 插入测试数据到MessageBoard表

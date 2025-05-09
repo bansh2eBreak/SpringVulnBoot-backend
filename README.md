@@ -7,33 +7,13 @@
 1. 前端是基于流行的vue-admin-template基础模板进行改改改，[前端工程](https://github.com/bansh2eBreak/SpringVulnBoot-frontend)
 2. 后端是基于SpringBoot 2.7.14开发的，[后端工程](https://github.com/bansh2eBreak/SpringVulnBoot-backend)
 
-## 效果图
-![img_9.png](images/img_9.png)
-![img_10.png](images/img_10.png)
-![img_1.png](images/img_1.png)
-![img_2.png](images/img_2.png)
-![img_3.png](images/img_3.png)
-![img_4.png](images/img_4.png)
-![img_5.png](images/img_5.png)
-![img_6.png](images/img_6.png)
-![img_7.png](images/img_7.png)
-![img_8.png](images/img_8.png)
-
 ## 更新日志
-2025/03/21（最新更新）：
-- 增加身份认证漏洞-短信验证码相关漏洞
-
-2025/03/06：
-- 增加文件上传漏洞
-
-2025/02/21：
-- 增加路径穿越漏洞，并可以前端直接复现
-
-2025/02/10：
-- 增加组件漏洞-Fastjson漏洞，并可以前端直接复现
-
-2025/02/08：
-- 增加身份认证漏洞-密码登录暴力破解漏洞，包括普通的账号密码登录、HTTP Basic认证登录、带图形验证码登录几种场景。
+2025/05/09：
+- 增加身份认证漏洞-MFA登录漏洞中的MFA绑定与MFA解绑操作
+- 增加越权漏洞：
+  - 平行越权漏洞
+  - 未授权访问漏洞
+  - 垂直越权漏洞（todo）
 
 ## 靶场已编写的漏洞
 - SQLi注入
@@ -48,6 +28,9 @@
 - 任意URL跳转
 - 路径穿越漏洞
 - 文件上传漏洞
+- 越权漏洞
+  - 水平越权漏洞
+  - 未授权访问漏洞
 - 身份认证漏洞 
   - 密码登录暴力破解
     - 普通的账号密码登录暴力破解
@@ -66,6 +49,21 @@
 - SSRF漏洞
 - CSRF漏洞
 - 逻辑漏洞
-- 业务漏洞
-- ...
+- 配置漏洞
+
+## 效果图
+![img_11.png](images/img_11.png)
+![img_12.png](images/img_12.png)
+![img_9.png](images/img_9.png)
+![img_10.png](images/img_10.png)
+![img_1.png](images/img_1.png)
+![img_2.png](images/img_2.png)
+![img_3.png](images/img_3.png)
+![img_4.png](images/img_4.png)
+![img_5.png](images/img_5.png)
+![img_6.png](images/img_6.png)
+![img_7.png](images/img_7.png)
+![img_8.png](images/img_8.png)
+
+
 

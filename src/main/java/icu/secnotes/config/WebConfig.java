@@ -14,7 +14,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginCheckInterceptor).addPathPatterns("/**").excludePathPatterns("/login").excludePathPatterns("/openUrl/**")
-                .excludePathPatterns("/authentication/passwordBased/captcha");
+                .excludePathPatterns("/authentication/passwordBased/captcha")
+                .excludePathPatterns("/accessControl/HorizontalPri/vuln2/**");
     }
 
 }
