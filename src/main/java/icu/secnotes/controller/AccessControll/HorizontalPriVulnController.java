@@ -1,4 +1,4 @@
-package icu.secnotes.controller.accessControll;
+package icu.secnotes.controller.AccessControll;
 
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 import icu.secnotes.pojo.MfaSecret;
