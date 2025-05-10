@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @Slf4j
@@ -120,12 +121,19 @@ public class RCEController {
             ProcessBuilder processBuilder = new ProcessBuilder(cmd);
             // ProcessBuilder processBuilder = new ProcessBuilder("sh", "-c", "ping " + ip); // 也可以这样写
 
-            // 设置超时时间为10秒
-            // 退出值为 124 表示进程因为超时被终止
-            processBuilder.command().add(0, "timeout");
-            processBuilder.command().add(1, "10s");
-
             Process process = processBuilder.start();
+
+            // *** 正确的超时设置方法 ***
+            // 等待进程结束，最多等待 10 秒
+            boolean finished = process.waitFor(10, TimeUnit.SECONDS);
+
+            if (!finished) {
+                // 如果进程在 10 秒内没有结束，则强制终止它
+                process.destroyForcibly();
+                sb.append("命令执行超时，已被终止。\n");
+                // 等待进程完全终止
+                process.waitFor(); // 这一行确保进程清理完毕
+            }
 
             // 获取命令的输出流
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
