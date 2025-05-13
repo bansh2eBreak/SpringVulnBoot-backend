@@ -8,12 +8,12 @@
 2. 后端是基于SpringBoot 2.7.14开发的，[后端工程](https://github.com/bansh2eBreak/SpringVulnBoot-backend)
 
 ## 更新日志
-2025/05/09：
+2025/05/13：
 - 增加身份认证漏洞-MFA登录漏洞中的MFA绑定与MFA解绑操作
 - 增加越权漏洞：
   - 平行越权漏洞
   - 未授权访问漏洞
-  - 垂直越权漏洞（todo）
+  - 垂直越权漏洞
 
 ## 靶场已编写的漏洞
 - SQLi注入
@@ -30,6 +30,7 @@
 - 文件上传漏洞
 - 越权漏洞
   - 水平越权漏洞
+  - 垂直越权漏洞
   - 未授权访问漏洞
 - 身份认证漏洞 
   - 密码登录暴力破解
@@ -54,6 +55,7 @@
 ## 效果图
 ![img_11.png](images/img_11.png)
 ![img_12.png](images/img_12.png)
+![img_13.png](images/img_13.png)
 ![img_9.png](images/img_9.png)
 ![img_10.png](images/img_10.png)
 ![img_1.png](images/img_1.png)
