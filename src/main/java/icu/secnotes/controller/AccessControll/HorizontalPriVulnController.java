@@ -9,7 +9,6 @@ import icu.secnotes.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -168,21 +167,6 @@ public class HorizontalPriVulnController {
         } catch (Exception e) {
             log.error("JWT验证失败", e);
             return Result.error("身份验证失败");
-        }
-    }
-
-    /**
-     * 未授权访问漏洞，不需要认证登录就可以获取其他人的MFA密钥
-     * @param userId
-     * @return
-     */
-    @GetMapping("/vuln2/{userId}")
-    public Result getMfaSecretByUnAuth(@PathVariable Integer userId) {
-        MfaSecret mfaSecret = mfaSecretService.getSecretByUserId(userId);
-        if (mfaSecret != null) {
-            return Result.success(mfaSecret.getSecret());
-        } else {
-            return Result.error("用户不存在或者用户未绑定MFA");
         }
     }
 
