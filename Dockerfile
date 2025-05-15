@@ -25,7 +25,7 @@ ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 
 # --- 第二阶段：使用 JRE 镜像运行 JAR ---
-FROM openjdk:11-jre-slim # 使用 JRE 镜像，更小巧
+FROM openjdk:11-jre-slim
 
 WORKDIR /app
 
