@@ -1,0 +1,6 @@
+target/
+.idea/
+.vscode/
+*.iml
+Dockerfile
+docker-compose.yml
