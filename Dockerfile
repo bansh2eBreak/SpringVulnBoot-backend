@@ -2,9 +2,9 @@
 FROM openjdk:11-jdk-slim as builder
 
 WORKDIR /app
+RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
 
 # 复制 Maven 项目文件，让 Maven 下载依赖，利用 Docker 层缓存
-# （如果使用 Gradle，复制 build.gradle, settings.gradle 等）
 COPY pom.xml .
 COPY src ./src
 # 如果有父 pom 或其他模块依赖，也需要复制
@@ -16,7 +16,6 @@ COPY src ./src
 # COPY .mvn .mvn
 # RUN ./mvnw package -DskipTests
 # 对于本地 Maven (需要确保镜像中有 mvn):
-# RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/* # 如果基础镜像没有 maven 需要安装
 RUN mvn package -DskipTests
 
 # 找到生成的 JAR 文件 (通常在 target 目录下)
