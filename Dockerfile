@@ -1,4 +1,4 @@
-FROM maven:3.9.6-jdk-11-slim AS builder
+FROM maven:3.9.3-jdk-11-bullseye-slim AS builder
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
