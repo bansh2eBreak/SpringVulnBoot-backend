@@ -22,7 +22,7 @@ services:
     image: mysql:8.0
     container_name: springvulnboot-mysql
     ports:
-      - "13306:3306"
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=Root1234
       - MYSQL_DATABASE=SpringVulnBoot
@@ -45,4 +45,4 @@ networks:
 
 volumes:
   mysql-data:
-    driver: local 
+    driver: local
