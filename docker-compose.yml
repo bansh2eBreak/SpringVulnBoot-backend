@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # SpringBoot应用服务
   app:
@@ -41,4 +39,4 @@ networks:
 
 volumes:
   mysql-data:
-    driver: local
+    driver: local 
