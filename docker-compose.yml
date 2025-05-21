@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # SpringBoot应用服务
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: springvulnboot-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/SpringVulnBoot?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Root1234
+    depends_on:
+      - mysql
+    networks:
+      - springvulnboot-network
+
+  # MySQL数据库服务
+  mysql:
+    image: mysql:8.0
+    container_name: springvulnboot-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=Root1234
+      - MYSQL_DATABASE=SpringVulnBoot
+      - TZ=Asia/Shanghai
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db.sql:/docker-entrypoint-initdb.d/01-init.sql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - springvulnboot-network
+
+networks:
+  springvulnboot-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
