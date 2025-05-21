@@ -1,5 +1,5 @@
 # 第一阶段：构建阶段
-FROM maven:3.9.3-eclipse-temurin-11 AS build
+FROM registry.cn-hangzhou.aliyuncs.com/aliyun-maven/maven:3.9.3-jdk-11 AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
