@@ -8,11 +8,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:13306/SpringVulnBoot?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/SpringVulnBoot?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=Root1234
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - springvulnboot-network
 
@@ -28,10 +29,15 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+      - ${PWD}/db.sql:/docker-entrypoint-initdb.d/01-init.sql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     networks:
       - springvulnboot-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pRoot1234"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
 
 networks:
   springvulnboot-network:
