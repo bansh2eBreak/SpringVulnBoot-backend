@@ -20,7 +20,7 @@ services:
   # MySQL数据库服务
   mysql:
     image: mysql:8.0
-    container_name: springvulnboot-mysql
+    container_name: mysql
     ports:
       - "13306:3306"
     environment:
