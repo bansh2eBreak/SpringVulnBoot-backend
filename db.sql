@@ -13,6 +13,10 @@ create table if not exists Admin
         unique (username)
 );
 
+-- 插入测试数据到Admin表
+INSERT INTO Admin (name, username, password, token) VALUES ('系统管理员','admin', '123456', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)));
+INSERT INTO Admin (name, username, password, token) VALUES ('审计员','zhangsan', '123456', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)));
+
 -- 创建留言表
 create table if not exists MessageBoard
 (
@@ -76,9 +80,6 @@ create table if not exists user_login_log
 INSERT INTO MessageBoard (id, message) VALUES (1, '这个靶场真棒！');
 INSERT INTO MessageBoard (id, message) VALUES (2, '怎么没有命令执行漏洞系列？');
 INSERT INTO MessageBoard (id, message) VALUES (3, '催更！！！');
-
--- 插入测试数据到Admin表
-INSERT INTO Admin (username, password, token) VALUES ('admin', '123456', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)));
 
 -- 插入测试数据到User表
 INSERT INTO User (id, username, name, password) VALUES (1, 'zhangsan', '张三', '123');
