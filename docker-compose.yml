@@ -28,7 +28,7 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - mysql-data:/var/lib/mysql
-      - ${PWD}/db.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     networks:
       - springvulnboot-network
