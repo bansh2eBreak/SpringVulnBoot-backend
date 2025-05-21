@@ -3,7 +3,7 @@ create table if not exists Admin
 (
     id          int auto_increment
         primary key,
-    name        varchar(10)                                                                                                         not null,
+    name        varchar(50)                                                                                                         not null,
     username    varchar(50)                                                                                                         not null,
     password    varchar(50)                                                                                                         not null,
     token       varchar(255)                                                                                                        null,
@@ -45,7 +45,7 @@ create table if not exists mfa_secret
     create_time datetime     null comment '创建时间',
     update_time datetime     null comment '更新时间',
     constraint mfa_secret_Admin_id_fk
-        foreign key (userId) references springvulnboot.Admin (id)
+        foreign key (userId) references Admin (id)
 )
     comment 'MFA密钥表';
 
