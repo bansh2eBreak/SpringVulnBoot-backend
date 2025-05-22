@@ -42,7 +42,9 @@ public class CorsConfig {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);    //这是最关键的改动，必须设置 allowCredentials 为 true，才能允许跨域请求携带 Cookie。
         corsConfiguration.addAllowedOrigin("http://127.0.0.1:9528");
+        corsConfiguration.addAllowedOrigin("http://127.0.0.1");
         corsConfiguration.addAllowedOrigin("http://localhost:9528");
+        corsConfiguration.addAllowedOrigin("http://localhost");
         corsConfiguration.addAllowedMethod("*"); // 允许所有请求方法
         corsConfiguration.addAllowedHeader("*"); // 允许所有请求头部
 
