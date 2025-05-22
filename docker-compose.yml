@@ -1,5 +1,20 @@
+version: '3.8'
+
 services:
-  # SpringBoot应用服务
+  # 前端服务
+  frontend:
+    build:
+      context: ../SpringVulnBoot-frontend
+      dockerfile: Dockerfile
+    container_name: springvulnboot-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+    networks:
+      - springvulnboot-network
+
+  # 后端服务
   app:
     build:
       context: .
@@ -30,7 +45,7 @@ services:
       - LANG=C.UTF-8
     volumes:
       - mysql-data:/var/lib/mysql
-      - ${PWD}/db.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./db.sql:/docker-entrypoint-initdb.d/01-init.sql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_ai_ci --lower_case_table_names=1 --init-connect='SET NAMES utf8mb4'
     networks:
       - springvulnboot-network
@@ -46,4 +61,4 @@ networks:
 
 volumes:
   mysql-data:
-    driver: local
+    driver: local 
