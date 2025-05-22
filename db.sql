@@ -83,6 +83,7 @@ create table if not exists user_login_log
 INSERT INTO MessageBoard (id, message) VALUES (1, '这个靶场真棒！');
 INSERT INTO MessageBoard (id, message) VALUES (2, '怎么没有命令执行漏洞系列？');
 INSERT INTO MessageBoard (id, message) VALUES (3, '催更！！！');
+INSERT INTO MessageBoard (id, message) VALUES (4, '<img src=x onmouseover=alert(/xss/)>');
 
 -- 插入测试数据到User表
 INSERT INTO User (id, username, name, password) VALUES (1, 'zhangsan', '张三', '123');
