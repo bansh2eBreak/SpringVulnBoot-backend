@@ -6,6 +6,7 @@ services:
     build:
       context: ../SpringVulnBoot-frontend
       dockerfile: Dockerfile
+    image: springvulnboot-frontend:latest
     container_name: springvulnboot-frontend
     ports:
       - "80:80"
@@ -19,6 +20,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: springvulnboot-backend:latest
     container_name: springvulnboot-backend
     ports:
       - "8080:8080"
