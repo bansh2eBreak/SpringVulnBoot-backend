@@ -1,3 +1,6 @@
+-- 设置数据库字符集
+ALTER DATABASE SpringVulnBoot CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+
 -- 创建管理员表
 create table if not exists Admin
 (
@@ -11,7 +14,7 @@ create table if not exists Admin
     create_time datetime                                                                                                            null,
     constraint username
         unique (username)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 插入测试数据到Admin表
 INSERT INTO Admin (name, username, password, token) VALUES ('系统管理员','admin', '123456', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)));
@@ -23,7 +26,7 @@ create table if not exists MessageBoard
     id      int auto_increment
         primary key,
     message varchar(200) null
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 创建用户表
 create table if not exists User
@@ -33,7 +36,7 @@ create table if not exists User
     username varchar(50) null,
     name     varchar(50) null,
     password varchar(50) null
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 创建MFA密钥表
 create table if not exists mfa_secret
@@ -47,7 +50,7 @@ create table if not exists mfa_secret
     constraint mfa_secret_Admin_id_fk
         foreign key (userId) references Admin (id)
 )
-    comment 'MFA密钥表';
+    comment 'MFA密钥表' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 create index userId
     on mfa_secret (userId);
@@ -64,7 +67,7 @@ create table if not exists sms_code
     used        int default 0 null comment '是否已使用：0未使用，1已使用',
     retry_count int default 0 null comment '验证重试次数'
 )
-    comment '短信验证码记录表';
+    comment '短信验证码记录表' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 创建用户登录日志表
 create table if not exists user_login_log
@@ -74,7 +77,7 @@ create table if not exists user_login_log
     ip        varchar(50)  not null,
     username  varchar(255) not null,
     loginTime datetime     not null
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 插入测试数据到MessageBoard表
 INSERT INTO MessageBoard (id, message) VALUES (1, '这个靶场真棒！');
