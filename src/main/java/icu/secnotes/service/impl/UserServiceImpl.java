@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> selecctUserByUsername(String username) {
+    public List<User> selectUserByUsername(String username) {
         return userMapper.selectUserByUsername(username);
     }
 
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> selecctUserSecByUsername(String username) {
+    public List<User> selectUserSecByUsername(String username) {
         return userMapper.selectUserSecByUsername(username);
     }
 

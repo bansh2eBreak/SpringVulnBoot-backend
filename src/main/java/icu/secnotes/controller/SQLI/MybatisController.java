@@ -58,7 +58,7 @@ public class MybatisController {
      */
     @GetMapping("/getUserByUsername/{username}")
     public Result getUserByUsername(@PathVariable String username) {
-        return Result.success(userService.selecctUserByUsername(username));
+        return Result.success(userService.selectUserByUsername(username));
     }
 
     /**
@@ -68,7 +68,7 @@ public class MybatisController {
      */
     @GetMapping("/getUserSecByUsername2")
     public Result getUserSecByUsername2(String username) {
-        return Result.success(userService.selecctUserSecByUsername(username));
+        return Result.success(userService.selectUserSecByUsername(username));
     }
 
     /**
@@ -77,7 +77,7 @@ public class MybatisController {
     @GetMapping("/getUserSecByUsernameFilter2")
     public Result getUserSecByUsernameFilter2(String username) {
         if (!Security.checkSql(username)) {
-            return Result.success(userService.selecctUserByUsername(username));
+            return Result.success(userService.selectUserByUsername(username));
         } else {
             log.warn("检测到非法注入字符: {}", username);
             return Result.error("检测到非法注入");
@@ -93,7 +93,7 @@ public class MybatisController {
      */
     @GetMapping("/getUserByUsername")
     public Result getUserByUsername2(String username) {
-        return Result.success(userService.selecctUserByUsername(username));
+        return Result.success(userService.selectUserByUsername(username));
     }
 
     /**
