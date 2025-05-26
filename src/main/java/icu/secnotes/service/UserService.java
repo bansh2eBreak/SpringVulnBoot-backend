@@ -9,7 +9,7 @@ public interface UserService {
 
     List<User> selectUserByUsername(String username);
 
-    PageBean pageOrderBy(String orderBy, Integer page, Integer pageSize);
+    PageBean<User> pageOrderBy(String orderBy, Integer page, Integer pageSize);
 
     List<User> selectUserSecByUsername(String username);
 
