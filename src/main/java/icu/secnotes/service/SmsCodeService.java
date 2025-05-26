@@ -1,9 +1,6 @@
 package icu.secnotes.service;
 
-import icu.secnotes.pojo.Result;
 import icu.secnotes.pojo.SmsCode;
-import org.apache.ibatis.annotations.Insert;
-
 import java.time.LocalDateTime;
 
 public interface SmsCodeService {

@@ -9,9 +9,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageBean {
-
-    private Integer total; //总记录数
-    private List rows;  //数据列表
-
+public class PageBean<T> {
+    /** 总记录数 */
+    private Integer total;
+    
+    /** 数据列表 */
+    private List<T> rows;
 }

@@ -3,7 +3,6 @@ package icu.secnotes.service.impl;
 import icu.secnotes.mapper.SmsCodeMapper;
 import icu.secnotes.pojo.SmsCode;
 import icu.secnotes.service.SmsCodeService;
-import org.apache.ibatis.annotations.Insert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

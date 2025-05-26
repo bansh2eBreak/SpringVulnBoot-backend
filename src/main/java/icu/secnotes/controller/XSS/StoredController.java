@@ -1,6 +1,5 @@
 package icu.secnotes.controller.XSS;
 
-import icu.secnotes.mapper.MessageBoardMapper;
 import icu.secnotes.pojo.MessageBoard;
 import icu.secnotes.pojo.Result;
 import icu.secnotes.service.MessageBoardService;
