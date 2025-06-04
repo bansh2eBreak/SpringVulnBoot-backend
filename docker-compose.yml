@@ -57,6 +57,16 @@ services:
       timeout: 5s
       retries: 20
 
+  # Redis服务（未授权访问）
+  redis:
+    image: redis:6.2
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --protected-mode no  # 关闭保护模式，允许未授权访问
+    networks:
+      - springvulnboot-network
+
 networks:
   springvulnboot-network:
     driver: bridge
