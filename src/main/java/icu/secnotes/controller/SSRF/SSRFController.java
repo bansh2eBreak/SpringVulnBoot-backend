@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
@@ -21,7 +18,7 @@ import java.util.Base64;
 public class SSRFController {
 
     @GetMapping("/vuln1")
-    public Result previewImage(@RequestParam String url) {
+    public Result previewImageVuln(@RequestParam String url) {
         try {
             // 直接使用用户输入的URL获取图片，没有进行任何过滤
             URL imageUrl = new URL(url);
