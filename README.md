@@ -51,6 +51,9 @@ docker compose up -d
 - 经过测试，容器方式部署，里面的路径穿越漏洞暂不支持，待优化
 
 ## 3.更新日志
+2025/06/13：
+- 增加列目录漏洞
+  
 2025/05/23：
 - 解决容器化部署时组件漏洞不兼容问题
 
@@ -94,6 +97,8 @@ docker compose up -d
 - 组件漏洞
   - Fastjson漏洞
   - Log4j2漏洞
+- 配置漏洞
+  - 列目录漏洞
 
 ## 5.效果图展示
 ![img_11.png](images/img_11.png)
@@ -109,4 +114,3 @@ docker compose up -d
 ![img_6.png](images/img_6.png)
 ![img_7.png](images/img_7.png)
 ![img_8.png](images/img_8.png)
-
