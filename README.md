@@ -51,6 +51,9 @@ docker compose up -d
 - 经过测试，容器方式部署，里面的路径穿越漏洞暂不支持，待优化
 
 ## 3.更新日志
+2025/06/25：
+- 增加报错注入漏洞
+
 2025/06/13：
 - 增加列目录漏洞
   
@@ -71,6 +74,7 @@ docker compose up -d
 - SQLi注入
   - 基于Jdbc的SQLi注入
   - 基于Mybatis的SQLi注入
+  - 报错注入
 - XSS跨站脚本
   - 反射型XSS
   - 存储型XSS
@@ -101,6 +105,7 @@ docker compose up -d
   - 列目录漏洞
 
 ## 5.效果图展示
+![img_14.png](images/img_14.png)
 ![img_11.png](images/img_11.png)
 ![img_12.png](images/img_12.png)
 ![img_13.png](images/img_13.png)
