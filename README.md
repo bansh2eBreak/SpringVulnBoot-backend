@@ -51,6 +51,9 @@ docker compose up -d
 - 经过测试，容器方式部署，里面的路径穿越漏洞暂不支持，待优化
 
 ## 3.更新日志
+2025/06/26：
+- 增加配置漏洞-Actuator未授权漏洞
+  
 2025/06/25：
 - 增加报错注入漏洞
 
@@ -103,6 +106,7 @@ docker compose up -d
   - Log4j2漏洞
 - 配置漏洞
   - 列目录漏洞
+  - Actuator未授权
 
 ## 5.效果图展示
 ![img_14.png](images/img_14.png)

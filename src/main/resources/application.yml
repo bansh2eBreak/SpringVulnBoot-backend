@@ -8,3 +8,16 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+
+# Actuator配置 - 启用所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # 启用所有端点
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+    env:
+      show-values: always
