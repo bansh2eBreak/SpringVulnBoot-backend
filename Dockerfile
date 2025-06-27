@@ -25,6 +25,8 @@ RUN mvn dependency:go-offline -B
 
 # 复制源代码
 COPY src ./src
+# 复制 images 目录到构建环境
+COPY images ./images
 # 构建应用
 RUN mvn clean package -DskipTests -B
 
@@ -32,6 +34,8 @@ RUN mvn clean package -DskipTests -B
 FROM eclipse-temurin:11-jre-jammy
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
+# 复制 images 目录到生产镜像
+COPY --from=build /app/images ./images
 
 # 设置时区为中国时区
 ENV TZ=Asia/Shanghai

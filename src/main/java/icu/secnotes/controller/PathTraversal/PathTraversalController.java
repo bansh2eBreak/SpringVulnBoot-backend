@@ -3,6 +3,7 @@ package icu.secnotes.controller.PathTraversal;
 import icu.secnotes.utils.Security;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,15 +23,10 @@ public class PathTraversalController {
 
     @GetMapping("/vuln1")
     public ResponseEntity<byte[]> vuln1(@RequestParam String filename) throws IOException {
-        // 1. 构建图片文件路径
+        //System.out.println(System.getProperty("user.dir"));
+        // 1. 构建文件路径（存在路径穿越漏洞！）
         File file = new File("images/" + filename);
 
-        /**
-         * 1）项目的根目录通常是指包含pom.xml文件的目录
-         *      -- 打印文件路径可知：/Users/liujianping/IdeaProjects/SpringVulnBoot/images/img_6.png
-         * 2）如果是读取resources下面的图片呢
-         *      File file = new File("src/main/resources/images/" + filename);
-         */
         log.info("文件位置: {}", file.getAbsolutePath());
 
         // 2. 检查文件是否存在
@@ -40,11 +36,11 @@ public class PathTraversalController {
 
         // 3. 读取文件内容并返回
         FileInputStream fis = new FileInputStream(file);
-        byte[] imageBytes = IOUtils.toByteArray(fis);
+        byte[] fileBytes = IOUtils.toByteArray(fis);
         fis.close();
 
-        // 4. 获取图片类型 (根据实际情况修改)
-        String contentType; // 默认图片类型
+        // 4. 获取内容类型
+        String contentType;
         if (filename.toLowerCase().endsWith(".jpg") || filename.toLowerCase().endsWith(".jpeg")) {
             contentType = "image/jpeg";
         } else if (filename.toLowerCase().endsWith(".gif")) {
@@ -58,7 +54,7 @@ public class PathTraversalController {
         // 5. 设置 Content-Type 响应头并返回 ResponseEntity
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
-                .body(imageBytes);
+                .body(fileBytes);
     }
 
     @GetMapping("/sec1")
