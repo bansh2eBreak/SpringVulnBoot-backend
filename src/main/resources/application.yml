@@ -9,6 +9,12 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
+# MyBatis配置
+mybatis:
+  configuration:
+    # 开启SQL语句打印
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 # Actuator配置 - 启用所有端点
 management:
   endpoints:
