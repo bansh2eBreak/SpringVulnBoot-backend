@@ -6,6 +6,7 @@ import icu.secnotes.pojo.Result;
 import icu.secnotes.service.MfaSecretService;
 import icu.secnotes.utils.GoogleAuthenticatorUtil;
 import icu.secnotes.utils.JwtUtils;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@Tag(name = "水平越权漏洞", description = "水平越权漏洞演示")
 @RestController
 @Slf4j
 @RequestMapping("/accessControl/HorizontalPri")

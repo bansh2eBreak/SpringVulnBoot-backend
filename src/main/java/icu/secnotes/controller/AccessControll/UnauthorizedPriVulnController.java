@@ -4,11 +4,13 @@ import icu.secnotes.pojo.MfaSecret;
 import icu.secnotes.pojo.Result;
 import icu.secnotes.service.MfaSecretService;
 import icu.secnotes.utils.JwtUtils;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
+@Tag(name = "未授权访问漏洞", description = "未授权访问漏洞演示")
 @RestController
 @Slf4j
 @RequestMapping("/accessControl/UnauthorizedPri")

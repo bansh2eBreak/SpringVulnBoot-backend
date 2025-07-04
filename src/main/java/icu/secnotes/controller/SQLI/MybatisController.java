@@ -3,6 +3,7 @@ package icu.secnotes.controller.SQLI;
 import icu.secnotes.pojo.Result;
 import icu.secnotes.service.UserService;
 import icu.secnotes.utils.Security;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/sqli/mybatis")
 @Slf4j
+@Tag(name = "SQL注入漏洞-Mybatis", description = "Mybatis类型的SQL注入漏洞演示")
 public class MybatisController {
     
     @Autowired

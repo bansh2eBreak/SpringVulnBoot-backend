@@ -15,7 +15,10 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginCheckInterceptor).addPathPatterns("/**").excludePathPatterns("/login").excludePathPatterns("/openUrl/**")
                 .excludePathPatterns("/authentication/passwordBased/captcha")
-                .excludePathPatterns("/accessControl/UnauthorizedPri/vuln1/**");
+                .excludePathPatterns("/accessControl/UnauthorizedPri/vuln1/**")
+                .excludePathPatterns("/swagger-ui/**")
+                .excludePathPatterns("/swagger-ui.html")
+                .excludePathPatterns("/v3/api-docs/**");
     }
 
 }

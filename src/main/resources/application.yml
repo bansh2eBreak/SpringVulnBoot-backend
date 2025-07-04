@@ -8,7 +8,10 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+      
 # MyBatis配置
 mybatis:
   configuration:
@@ -27,3 +30,12 @@ management:
       show-details: always
     env:
       show-values: always
+
+# SpringDoc OpenAPI 配置
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    url: /v3/api-docs
+    path: /swagger-ui.html
+    disable-swagger-default-url: true

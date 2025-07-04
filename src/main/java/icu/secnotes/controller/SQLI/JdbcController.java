@@ -3,6 +3,7 @@ package icu.secnotes.controller.SQLI;
 import icu.secnotes.pojo.Result;
 import icu.secnotes.pojo.User;
 import icu.secnotes.utils.Security;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/sqli/jdbc")
 @RestController
+@Tag(name = "SQL注入漏洞-Jdbc", description = "JDBC类型的SQL注入漏洞演示")
 public class JdbcController {
 
     /**
