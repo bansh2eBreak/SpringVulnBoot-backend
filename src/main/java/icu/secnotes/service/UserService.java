@@ -16,4 +16,10 @@ public interface UserService {
     User passwordLogin(User user);
 
     User passwordLogin2(String username, String password);
+
+    // 新增方法：更新用户密码
+    int updateUserPassword(User user);
+
+    // 新增方法：获取所有用户
+    List<User> getAllUsers();
 }

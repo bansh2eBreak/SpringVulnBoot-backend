@@ -3,6 +3,8 @@ package icu.secnotes.utils;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
 import com.warrenstrange.googleauth.GoogleAuthenticatorQRGenerator;
+import com.warrenstrange.googleauth.GoogleAuthenticatorConfig;
+import java.util.concurrent.TimeUnit;
 
 public class GoogleAuthenticatorUtil {
 
@@ -34,6 +36,12 @@ public class GoogleAuthenticatorUtil {
      * @return 是否验证通过
      */
     public static boolean verifyCode(String secret, int code) {
+        // 设置只允许当前窗口
+        GoogleAuthenticatorConfig config = new GoogleAuthenticatorConfig.GoogleAuthenticatorConfigBuilder()
+                .setTimeStepSizeInMillis(TimeUnit.SECONDS.toMillis(30)) // 30秒窗口
+                .setWindowSize(1) // 表示只验证当前时间窗口（即当前 30 秒内）的验证码，不验证前一个或后一个窗口的代码
+                .build();
+        GoogleAuthenticator gAuth = new GoogleAuthenticator(config);
         return gAuth.authorize(secret, code);
     }
 }

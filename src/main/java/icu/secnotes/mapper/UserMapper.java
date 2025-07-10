@@ -4,6 +4,7 @@ import icu.secnotes.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -54,5 +55,17 @@ public interface UserMapper {
 
     @Select("select * from user where username = #{username} and password = #{password}")
     User passwordLogin2(String username, String password);
+
+    /**
+     * 更新用户密码
+     */
+    @Update("update user set password = #{password} where id = #{id}")
+    int updateUserPassword(User user);
+
+    /**
+     * 获取所有用户
+     */
+    @Select("select * from user")
+    List<User> getAllUsers();
 
 }

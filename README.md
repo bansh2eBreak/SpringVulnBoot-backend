@@ -84,6 +84,8 @@ docker compose up -d
     - 短信轰炸
     - 短信验证码回显
     - 暴力破解短信验证码
+  - MFA 认证漏洞
+    - 仅前端认证可绕过
 - 组件漏洞
   - Fastjson漏洞
   - Log4j2漏洞
