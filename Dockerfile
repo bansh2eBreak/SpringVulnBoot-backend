@@ -44,5 +44,5 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # 暴露应用端口（默认8080，可以根据实际应用端口修改）
 EXPOSE 8080
 
-# 启动命令
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# 启动命令 - 支持JVM参数配置
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

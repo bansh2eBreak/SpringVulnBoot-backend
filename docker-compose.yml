@@ -28,6 +28,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/SpringVulnBoot?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=Root1234
+      - JAVA_OPTS=--add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED
     depends_on:
       mysql:
         condition: service_healthy
