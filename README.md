@@ -92,6 +92,7 @@ docker compose up -d
   - Log4j2漏洞
   - SnakeYAML漏洞
   - XMLDecoder漏洞
+  - Shiro-550漏洞
 - 配置漏洞
   - 列目录漏洞
   - Actuator未授权
@@ -99,6 +100,7 @@ docker compose up -d
 
 ## 4、效果图展示
 
+![img_16.png](images/img_16.png)
 ![img_15.png](images/img_15.png)
 ![img_14.png](images/img_14.png)
 ![img_12.png](images/img_12.png)
