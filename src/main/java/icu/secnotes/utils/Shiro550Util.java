@@ -7,7 +7,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Shiro-550漏洞测试工具类
