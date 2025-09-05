@@ -4,7 +4,6 @@ import icu.secnotes.pojo.Result;
 import icu.secnotes.pojo.User;
 import icu.secnotes.service.UserService;
 import icu.secnotes.utils.JwtSensitiveUtils;
-import icu.secnotes.utils.JwtSecureUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -67,7 +66,7 @@ public class JwtSensitiveController {
             claims.put("username", loginUser.getUsername());
             claims.put("name", loginUser.getName());
 
-            String jwttoken = JwtSecureUtils.generateJwt(claims);
+            String jwttoken = JwtSensitiveUtils.generateJwt(claims);
 
             log.info("用户:{} JWT安全实现登录成功，分配的jwttoken是:{}", loginUser.getUsername(), jwttoken);
             return Result.success(jwttoken);
