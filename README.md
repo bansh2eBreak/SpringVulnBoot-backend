@@ -87,6 +87,10 @@ docker compose up -d
     - 暴力破解短信验证码
   - MFA 认证漏洞
     - 仅前端认证可绕过
+- JWT安全漏洞
+  - JWT弱密码
+  - JWT存储敏感信息
+  - JWT None算法漏洞
 - 组件漏洞
   - Fastjson漏洞
   - Log4j2漏洞
