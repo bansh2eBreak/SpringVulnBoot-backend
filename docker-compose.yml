@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # 前端服务
   frontend:
