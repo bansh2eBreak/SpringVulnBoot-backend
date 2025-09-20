@@ -37,8 +37,9 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql
-    ports:
-      - "13306:3306"
+    # 移除端口暴露，只允许内部网络访问
+    # ports:
+    #   - "13306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=Root1234
       - MYSQL_DATABASE=SpringVulnBoot
@@ -56,12 +57,13 @@ services:
       timeout: 5s
       retries: 20
 
-  # Redis服务（未授权访问）
+  # Redis服务（仅内部访问）
   redis:
     image: redis:6.2
     container_name: redis
-    ports:
-      - "6379:6379"
+    # 移除端口暴露，只允许内部网络访问
+    # ports:
+    #   - "6379:6379"
     command: redis-server --protected-mode no  # 关闭保护模式，允许未授权访问
     networks:
       - springvulnboot-network
