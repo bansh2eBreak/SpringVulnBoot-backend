@@ -46,7 +46,6 @@ docker compose up -d
 
 - 前端页面：[http://localhost](http://localhost)
 - 后端API：[http://localhost:8080](http://localhost:8080)
-- MySQL数据库：localhost:13306
 
 4、注意
 
@@ -91,6 +90,7 @@ docker compose up -d
   - JWT弱密码
   - JWT存储敏感信息
   - JWT None算法漏洞
+  - JWT 算法混淆漏洞
 - 组件漏洞
   - Fastjson漏洞
   - Log4j2漏洞
