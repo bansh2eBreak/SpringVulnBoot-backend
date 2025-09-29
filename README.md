@@ -103,6 +103,8 @@ docker compose up -d
   - 列目录漏洞
   - Actuator未授权
   - Swagger未授权
+- 其他漏洞
+  - 拒绝服务漏洞
 
 ## 4、效果图展示
 
