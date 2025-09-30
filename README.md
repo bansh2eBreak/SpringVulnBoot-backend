@@ -105,6 +105,7 @@ docker compose up -d
   - Swagger未授权
 - 其他漏洞
   - 拒绝服务漏洞
+  - IP地址伪造
 
 ## 4、效果图展示
 

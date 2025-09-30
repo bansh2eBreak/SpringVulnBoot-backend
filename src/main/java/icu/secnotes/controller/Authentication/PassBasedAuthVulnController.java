@@ -9,7 +9,6 @@ import icu.secnotes.utils.Security;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -78,7 +77,7 @@ public class PassBasedAuthVulnController {
             return Result.success("登录成功，账号：" + user.getUsername() + "，密码：" + user.getPassword());
         } else {
             // 登录失败，记录登录失败日志
-            userLoginLogService.insertUserLoginLog(ip, user.getUsername(), LocalDateTime.now());
+            userLoginLogService.insertUserLoginLog(ip, user.getUsername(), LocalDateTime.now(), "失败");
             log.error("登录失败，账号密码是：{},{}", user.getUsername(), user.getPassword());
             return Result.success("登录失败，账号：" + user.getUsername() + "，密码：" + user.getPassword());
         }
@@ -108,7 +107,7 @@ public class PassBasedAuthVulnController {
             return Result.success("登录成功，账号：" + user.getUsername() + "，密码：" + user.getPassword());
         } else {
             // 登录失败，记录登录失败日志
-            userLoginLogService.insertUserLoginLog(ip, user.getUsername(), LocalDateTime.now());
+            userLoginLogService.insertUserLoginLog(ip, user.getUsername(), LocalDateTime.now(), "失败");
             log.error("登录失败，账号密码是：{},{}", user.getUsername(), user.getPassword());
             return Result.success("登录失败，账号：" + user.getUsername() + "，密码：" + user.getPassword());
         }

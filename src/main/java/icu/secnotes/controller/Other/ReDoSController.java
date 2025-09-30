@@ -1,4 +1,4 @@
-package icu.secnotes.controller.ReDoS;
+package icu.secnotes.controller.Other;
 
 import icu.secnotes.pojo.Result;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,7 +50,6 @@ public class ReDoSController {
             return Result.error("处理异常: " + e.getMessage() + ", 耗时: " + duration + "ms");
         }
     }
-
 
     /**
      * 安全的正则表达式接口

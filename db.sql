@@ -72,11 +72,12 @@ create table if not exists sms_code
 -- 创建用户登录日志表
 create table if not exists user_login_log
 (
-    id        int auto_increment
+    id          int auto_increment
         primary key,
-    ip        varchar(50)  not null,
-    username  varchar(255) not null,
-    loginTime datetime     not null
+    ip          varchar(50)  not null,
+    username    varchar(255) not null,
+    loginTime   datetime     not null,
+    loginResult varchar(10)  not null comment '登录结果：成功/失败'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 插入测试数据到MessageBoard表
@@ -106,3 +107,6 @@ INSERT INTO User (id, username, name, password) VALUES (17, 'user17', 'User 17',
 INSERT INTO User (id, username, name, password) VALUES (18, 'user18', 'User 18', '123');
 INSERT INTO User (id, username, name, password) VALUES (19, 'user19', 'User 19', '123');
 INSERT INTO User (id, username, name, password) VALUES (20, 'user20', 'User 20', '123');
+
+-- 为现有的user_login_log表添加loginResult字段（如果不存在）
+ALTER TABLE user_login_log ADD COLUMN IF NOT EXISTS loginResult varchar(10) NOT NULL DEFAULT '失败' COMMENT '登录结果：成功/失败';
