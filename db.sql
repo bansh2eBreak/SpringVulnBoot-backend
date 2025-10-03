@@ -90,23 +90,12 @@ INSERT INTO MessageBoard (id, message) VALUES (4, '<img src=x onmouseover=alert(
 INSERT INTO User (id, username, name, password) VALUES (1, 'zhangsan', '张三', '123');
 INSERT INTO User (id, username, name, password) VALUES (2, 'lisi', '李四', '123');
 INSERT INTO User (id, username, name, password) VALUES (3, 'wangwu', '王五', '123');
-INSERT INTO User (id, username, name, password) VALUES (4, 'user4', 'User 4', '123');
-INSERT INTO User (id, username, name, password) VALUES (5, 'user5', 'User 5', '123');
-INSERT INTO User (id, username, name, password) VALUES (6, 'user6', 'User 6', '123');
-INSERT INTO User (id, username, name, password) VALUES (7, 'user7', 'User 7', '123');
-INSERT INTO User (id, username, name, password) VALUES (8, 'user8', 'User 8', '123');
-INSERT INTO User (id, username, name, password) VALUES (9, 'user9', 'User 9', '123');
-INSERT INTO User (id, username, name, password) VALUES (10, 'user10', 'User 10', '123');
-INSERT INTO User (id, username, name, password) VALUES (11, 'user11', 'User 11', '123');
-INSERT INTO User (id, username, name, password) VALUES (12, 'user12', 'User 12', '123');
-INSERT INTO User (id, username, name, password) VALUES (13, 'user13', 'User 13', '123');
-INSERT INTO User (id, username, name, password) VALUES (14, 'user14', 'User 14', '123');
-INSERT INTO User (id, username, name, password) VALUES (15, 'user15', 'User 15', '123');
-INSERT INTO User (id, username, name, password) VALUES (16, 'user16', 'User 16', '123');
-INSERT INTO User (id, username, name, password) VALUES (17, 'user17', 'User 17', '123');
-INSERT INTO User (id, username, name, password) VALUES (18, 'user18', 'User 18', '123');
-INSERT INTO User (id, username, name, password) VALUES (19, 'user19', 'User 19', '123');
-INSERT INTO User (id, username, name, password) VALUES (20, 'user20', 'User 20', '123');
-
--- 为现有的user_login_log表添加loginResult字段（如果不存在）
-ALTER TABLE user_login_log ADD COLUMN IF NOT EXISTS loginResult varchar(10) NOT NULL DEFAULT '失败' COMMENT '登录结果：成功/失败';
+INSERT INTO User (id, username, name, password) VALUES (4, 'zhaoliu', '赵六', '123');
+INSERT INTO User (id, username, name, password) VALUES (5, 'qiaofeng', '乔峰', '123');
+INSERT INTO User (id, username, name, password) VALUES (6, 'duanyu', '段誉', '123');
+INSERT INTO User (id, username, name, password) VALUES (7, 'xuzhu', '虚竹', '123');
+INSERT INTO User (id, username, name, password) VALUES (8, 'murongfu', '慕容复', '123');
+INSERT INTO User (id, username, name, password) VALUES (9, 'duanzhengchun', '段正淳', '123');
+INSERT INTO User (id, username, name, password) VALUES (10, 'saodiseng', '扫地僧', '123');
+INSERT INTO User (id, username, name, password) VALUES (11, 'wangyuyan', '王语嫣', '123');
+INSERT INTO User (id, username, name, password) VALUES (12, 'jiumozhi', '鸠摩智', '123');
