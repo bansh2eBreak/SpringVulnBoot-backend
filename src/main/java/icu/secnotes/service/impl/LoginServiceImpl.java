@@ -21,5 +21,35 @@ public class LoginServiceImpl implements LoginService {
     public Admin getAdminById(String id) {
         return loginMapper.getAdminById(id);
     }
+    
+    @Override
+    public boolean changePassword(String userId, String newPassword) {
+        try {
+            int result = loginMapper.changePassword(userId, newPassword);
+            return result > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean changePasswordSecure(String userId, String oldPassword, String newPassword) {
+        try {
+            int result = loginMapper.changePasswordSecure(userId, oldPassword, newPassword);
+            return result > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean verifyOldPassword(String userId, String oldPassword) {
+        try {
+            Admin admin = loginMapper.verifyOldPassword(userId, oldPassword);
+            return admin != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }

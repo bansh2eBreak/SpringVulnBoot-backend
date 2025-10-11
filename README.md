@@ -63,6 +63,7 @@ docker compose up -d
   - 反射型XSS
   - 存储型XSS
   - DOM型XSS
+- CSRF跨站请求伪造
 - 任意命令执行
   - Runtime方式
   - ProcessBuilder方式
