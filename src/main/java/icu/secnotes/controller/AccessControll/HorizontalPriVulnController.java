@@ -55,7 +55,8 @@ public class HorizontalPriVulnController {
             String secret = credentials.getKey();
             log.info("生成的MFA密钥: {}", secret);
 
-            String qrCodeUrl = GoogleAuthenticatorUtil.getQRCodeUrl("admin", "SpringVulnBoot", secret);
+            String tokenUsername = JwtUtils.parseJwt(jwttoken).get("username").toString();
+            String qrCodeUrl = GoogleAuthenticatorUtil.getQRCodeUrl(tokenUsername, "SpringVulnBoot", secret);
             log.info(qrCodeUrl);
 
             // 设置GoogleAuthenticatorKey
