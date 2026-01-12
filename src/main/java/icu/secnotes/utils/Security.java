@@ -123,4 +123,41 @@ public class Security {
         return phone.matches(regex);
     }
 
+    /**
+     * XPath注入危险字符检测
+     * 检测输入中是否包含可能导致XPath注入的特殊字符
+     * @param content 待检测的内容
+     * @return true表示包含危险字符，false表示安全
+     */
+    public static boolean checkXPath(String content) {
+        if (content == null || content.isEmpty()) {
+            return false;
+        }
+        
+        // XPath注入常见的危险字符和关键字
+        String[] black_list = {"'", "\"", "=", "or", "and", "|", "//", "[", "]", "(", ")", "*", "union"};
+        String lowerContent = content.toLowerCase();
+        
+        for (String str : black_list) {
+            if (lowerContent.contains(str.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * XPath字符串转义
+     * 将XPath字符串中的单引号转义为两个单引号（XPath标准转义方式）
+     * @param content 待转义的内容
+     * @return 转义后的内容
+     */
+    public static String escapeXPath(String content) {
+        if (content == null) {
+            return null;
+        }
+        // XPath中单引号的转义方式：' -> ''
+        return content.replace("'", "''");
+    }
+
 }
