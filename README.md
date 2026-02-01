@@ -74,6 +74,7 @@ docker compose up -d
 - XML安全漏洞
   - XML外部实体注入
   - XPath注入
+  - XML 炸弹漏洞
 - 越权漏洞
   - 水平越权漏洞
   - 垂直越权漏洞
