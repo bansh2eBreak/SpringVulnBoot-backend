@@ -65,12 +65,13 @@ public class XxeController {
             DocumentBuilder db = dbf.newDocumentBuilder();
             
             Document doc = db.parse(new InputSource(new StringReader(xmlContent)));
-            
-            // 获取根元素内容
-            String result = doc.getDocumentElement().getTextContent();
-            
-            log.info("XML解析结果: {}", result.substring(0, Math.min(200, result.length())));
-            
+            org.w3c.dom.Element root = doc.getDocumentElement();
+            if (root == null) {
+                return Result.error("XML 无根元素");
+            }
+            String result = root.getTextContent();
+            if (result != null) result = result.trim();
+            log.info("XML解析结果: {}", result != null ? result.substring(0, Math.min(200, result.length())) : "");
             return Result.success(result);
         } catch (Exception e) {
             log.error("XML解析失败", e);
@@ -114,11 +115,13 @@ public class XxeController {
             
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(new InputSource(new StringReader(xmlContent)));
-            
-            String result = doc.getDocumentElement().getTextContent();
-            
-            log.info("XML解析结果: {}", result.substring(0, Math.min(200, result.length())));
-            
+            org.w3c.dom.Element root = doc.getDocumentElement();
+            if (root == null) {
+                return Result.error("XML 无根元素");
+            }
+            String result = root.getTextContent();
+            if (result != null) result = result.trim();
+            log.info("XML解析结果: {}", result != null ? result.substring(0, Math.min(200, result.length())) : "");
             return Result.success(result);
         } catch (Exception e) {
             log.error("XML解析失败", e);
