@@ -5,12 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Field;
-import java.net.URL;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.util.HashMap;
-
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.codec.CodecSupport;
 import org.apache.shiro.crypto.AesCipherService;
@@ -28,11 +24,12 @@ public class ShiroExpTest {
     }
 
     public static Object deserialize(String filename) throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename));
-        Object obj = ois.readObject();
-        System.out.println(obj);
-        System.out.println("反序列化成功");
-        return obj;
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filename))) {
+            Object obj = ois.readObject();
+            System.out.println(obj);
+            System.out.println("反序列化成功");
+            return obj;
+        }
     }
 
     public static void generateRememberMe() throws Exception {

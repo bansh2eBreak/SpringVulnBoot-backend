@@ -1,7 +1,6 @@
 package icu.secnotes.test;
 
 import icu.secnotes.pojo.Person;
-
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.ByteArrayInputStream;
@@ -14,7 +13,7 @@ public class XMLDecoderTest {
         ObjectXMLDecoderTest();
         
         // 测试恶意payload执行系统命令
-        // EvilObjectXMLDecoderTest();
+        EvilObjectXMLDecoderTest();
     }
 
     private static void ObjectXMLDecoderTest() throws IOException {
@@ -85,13 +84,13 @@ public class XMLDecoderTest {
         System.out.println("\n=== XMLDecoder恶意payload测试 ===");
         
         // 测试1: 使用ProcessBuilder执行系统命令
-        // testProcessBuilderCommand();
+        testProcessBuilderCommand();
         
         // 测试2: 使用Runtime.exec执行系统命令
-        // testRuntimeExecCommand();
+        testRuntimeExecCommand();
         
         // 测试3: 通用命令执行测试
-        // testGenericCommandExecution();
+        testGenericCommandExecution();
         
         // 测试4: 使用JNDI注入（预留）
         testJNDIInjection();

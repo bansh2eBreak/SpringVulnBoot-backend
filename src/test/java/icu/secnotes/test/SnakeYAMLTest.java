@@ -7,9 +7,9 @@ public class SnakeYAMLTest {
     public static void main(String[] args) throws Exception {
 
         Yaml yaml = new Yaml();
-        // DnslogSnakeYamlTest(yaml);
-        // EvilObjectSnakeYamlTest(yaml);
-        // JNDISnakeYamlTest(yaml);
+        DnslogSnakeYamlTest(yaml);
+        EvilObjectSnakeYamlTest(yaml);
+        JNDISnakeYamlTest(yaml);
         ObjectSnakeYamlTest(yaml);
 
     }
