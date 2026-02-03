@@ -19,8 +19,10 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/swagger-ui/**")
                 .excludePathPatterns("/swagger-ui.html")
                 .excludePathPatterns("/v3/api-docs/**")
-                // SSRF via XXE：解析器请求 DTD 时不带 Authorization，需放行否则返回“未登录”导致 DTD 解析报错
-                .excludePathPatterns("/xml/xxe-ssrf/dtd");
+                // SSRF via XXE：解析器请求 DTD 时不带 Authorization，需放行否则返回"未登录"导致 DTD 解析报错
+                .excludePathPatterns("/xml/xxe-ssrf/dtd")
+                // 文件包含漏洞：放行下载示例文件、上传、执行等接口
+                .excludePathPatterns("/fileInclusion/**");
     }
 
 }
