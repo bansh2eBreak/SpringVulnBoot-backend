@@ -2,7 +2,6 @@ package icu.secnotes.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date;
 import java.util.Map;
@@ -35,12 +34,11 @@ public class JwtSignatureUtils {
     public static Claims parseVulnJwt(String jwttoken) {
         // 漏洞：接受没有签名的令牌
         // 重点是使用 .parse() 方法而不是 .parseClaimsJws()
-        Jwt jwt = Jwts.parser()
-            .setSigningKey(signKey)
-            .parse(jwttoken);
-
-        return (Claims) jwt.getBody();
-
+        // 直接返回，避免声明原始类型变量
+        return (Claims) Jwts.parser()
+                .setSigningKey(signKey)
+                .parse(jwttoken)
+                .getBody();
     }
 
     /**
