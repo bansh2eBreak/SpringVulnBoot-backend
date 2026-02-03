@@ -37,6 +37,7 @@ public class SnakeYAMLController {
      * SnakeYAML安全代码接口
      * 使用SafeConstructor防止反序列化漏洞
      */
+    @SuppressWarnings("deprecation")
     @PostMapping("/sec1")
     public Result snakeyamlSec1(@RequestBody String yaml) {
         log.info("SnakeYAML安全测试 - 请求参数: {}", yaml);

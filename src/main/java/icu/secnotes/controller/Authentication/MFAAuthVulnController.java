@@ -58,7 +58,7 @@ public class MFAAuthVulnController {
                 }
             }
 
-            if (targetUserId == null || newPassword == null) {
+            if (targetUserId == null || newPassword == null || mfaCode == null) {
                 return Result.error("参数不完整");
             }
 
