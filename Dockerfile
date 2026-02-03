@@ -36,6 +36,12 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 # 复制 images 目录到生产镜像
 COPY --from=build /app/images ./images
+# 创建应用统一文件管理目录并复制白名单脚本
+# 目录结构：
+#   /app/file/               - 白名单脚本目录（只读，攻击者不可写）
+#   /app/file/upload/        - 用户上传目录（运行时创建，攻击者可写）
+RUN mkdir -p /app/file
+COPY --from=build /app/src/main/resources/examples/utils.groovy /app/file/
 
 # 设置时区为中国时区
 ENV TZ=Asia/Shanghai
