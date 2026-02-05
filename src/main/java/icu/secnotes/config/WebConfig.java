@@ -1,28 +1,30 @@
 package icu.secnotes.config;
 
-import icu.secnotes.interceptor.LoginCheckInterceptor;
+import icu.secnotes.interceptor.PermissionInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Web配置类
+ * 注册权限拦截器，统一管理前后端权限验证
+ */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+    
     @Autowired
-    private LoginCheckInterceptor loginCheckInterceptor;
+    private PermissionInterceptor permissionInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginCheckInterceptor).addPathPatterns("/**").excludePathPatterns("/login").excludePathPatterns("/openUrl/**")
-                .excludePathPatterns("/authentication/passwordBased/captcha")
-                .excludePathPatterns("/accessControl/UnauthorizedPri/vuln1/**")
-                .excludePathPatterns("/swagger-ui/**")
-                .excludePathPatterns("/swagger-ui.html")
-                .excludePathPatterns("/v3/api-docs/**")
-                // SSRF via XXE：解析器请求 DTD 时不带 Authorization，需放行否则返回"未登录"导致 DTD 解析报错
-                .excludePathPatterns("/xml/xxe-ssrf/dtd")
-                // 文件包含漏洞：放行下载示例文件、上传、执行等接口
-                .excludePathPatterns("/fileInclusion/**");
+        // 注册权限拦截器，拦截所有请求
+        // 公共路径和权限路径的配置都在 PermissionConfig 中集中管理
+        registry.addInterceptor(permissionInterceptor)
+                .addPathPatterns("/**");
+        
+        // 注意：不再需要手动配置 excludePathPatterns
+        // 所有公共路径都在 PermissionConfig.PUBLIC_PATHS 中配置
+        // 所有权限路径都在 PermissionConfig.GUEST_PATHS 和 ADMIN_ONLY_PATHS 中配置
     }
-
 }

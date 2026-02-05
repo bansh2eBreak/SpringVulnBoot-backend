@@ -6,6 +6,8 @@
 
 [前端工程](https://github.com/bansh2eBreak/SpringVulnBoot-frontend)是基于流行的vue-admin-template基础模板进行改改改，[后端工程](https://github.com/bansh2eBreak/SpringVulnBoot-backend)是基于JDK11+SpringBoot 2.7.14开发的。
 
+‼️重大更新‼️：靶场前后端支持菜单级权限控制！
+
 ![info.png](images/springvulnboot_network.jpg)
 
 ## 2、快速开始

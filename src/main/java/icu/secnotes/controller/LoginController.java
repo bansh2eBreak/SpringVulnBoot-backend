@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,8 +63,19 @@ public class LoginController {
         Admin admin = loginService.getAdminById(id);
 
         if (admin != null) {
-            // 查询到用户
-            return Result.success(admin);
+            // 查询到用户，构造返回数据（包含roles数组）
+            Map<String, Object> userData = new HashMap<>();
+            userData.put("id", admin.getId());
+            userData.put("name", admin.getName());
+            userData.put("username", admin.getUsername());
+            userData.put("avatar", admin.getAvatar());
+            
+            // 将role转换为roles数组，如果role为null则默认为guest
+            String role = admin.getRole() != null ? admin.getRole() : "guest";
+            userData.put("roles", Arrays.asList(role));
+            
+            log.info("用户 {} 获取信息成功，角色: {}", admin.getUsername(), role);
+            return Result.success(userData);
         } else {
             // 根据token未查到用户
             return Result.error("未查到相关token");

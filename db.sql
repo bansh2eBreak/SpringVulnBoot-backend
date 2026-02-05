@@ -12,13 +12,15 @@ create table if not exists Admin
     token       varchar(255)                                                                                                        null,
     avatar      varchar(255) default 'https://img1.baidu.com/it/u=3200425930,2413475553&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800' null,
     create_time datetime                                                                                                            null,
+    role        varchar(20)  default 'guest'                                                                                        null comment '角色：admin-管理员, guest-访客',
     constraint username
         unique (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 插入测试数据到Admin表
-INSERT INTO Admin (name, username, password, token) VALUES ('系统管理员','admin', '123456', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)));
-INSERT INTO Admin (name, username, password, token) VALUES ('审计员','zhangsan', '123456', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)));
+INSERT INTO Admin (name, username, password, token, role, create_time) VALUES ('系统管理员','admin', '123456', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)), 'admin', NOW());
+INSERT INTO Admin (name, username, password, token, role, create_time) VALUES ('审计员','zhangsan', '123456', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)), 'admin', NOW());
+INSERT INTO Admin (name, username, password, token, role, create_time) VALUES ('访客用户','guest', 'guest123', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)), 'guest', NOW());
 
 -- 创建留言表
 create table if not exists MessageBoard
