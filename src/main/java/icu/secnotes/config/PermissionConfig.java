@@ -2,7 +2,6 @@ package icu.secnotes.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.AntPathMatcher;
-
 import java.util.*;
 
 /**
@@ -50,7 +49,8 @@ public class PermissionConfig {
     public static final List<String> GUEST_PATHS = Arrays.asList(
         "/sqli/**",           // SQL注入
         "/xss/**",            // XSS跨站脚本
-        "/rce/**"             // 任意命令执行（后端接口路径为 /rce）
+        "/rce/**",            // 任意命令执行（后端接口路径为 /rce）
+        "/massAssignment/**"  // Mass Assignment 批量赋值漏洞
     );
 
     /**

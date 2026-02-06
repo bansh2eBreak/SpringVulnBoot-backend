@@ -69,6 +69,7 @@ docker compose up -d
 - 任意命令执行
   - Runtime方式
   - ProcessBuilder方式
+- 批量赋值漏洞
 - 任意URL跳转
 - 路径穿越漏洞
 - 文件上传漏洞

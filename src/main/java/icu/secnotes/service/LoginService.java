@@ -31,4 +31,11 @@ public interface LoginService {
      * @return 是否验证成功
      */
     boolean verifyOldPassword(String userId, String oldPassword);
+    
+    /**
+     * 更新管理员信息（用于 Mass Assignment 漏洞演示）
+     * @param admin 管理员对象
+     * @return 是否更新成功
+     */
+    boolean updateAdmin(Admin admin);
 }

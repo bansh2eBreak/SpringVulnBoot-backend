@@ -51,5 +51,15 @@ public class LoginServiceImpl implements LoginService {
             return false;
         }
     }
+    
+    @Override
+    public boolean updateAdmin(Admin admin) {
+        try {
+            int result = loginMapper.updateAdmin(admin);
+            return result > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }
