@@ -61,6 +61,7 @@ docker compose up -d
   - 基于Mybatis的SQLi注入
   - 报错注入
   - 基于时间盲注
+  - 布尔注入
 - XSS跨站脚本
   - 反射型XSS
   - 存储型XSS
