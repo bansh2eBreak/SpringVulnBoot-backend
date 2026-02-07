@@ -62,6 +62,7 @@ docker compose up -d
   - 报错注入
   - 基于时间盲注
   - 布尔注入
+  - UNION联合注入
 - XSS跨站脚本
   - 反射型XSS
   - 存储型XSS
