@@ -83,8 +83,8 @@ public class LoginController {
     }
 
     /**
-     * 管理员修改密码接口
-     * 用于管理员实际使用的修改密码功能
+     * 修改密码接口 - 存在二次注入漏洞
+     * ⚠️ 从 JWT 中提取 username（该 username 是从数据库读取的，可能包含恶意 SQL）
      */
     @PostMapping("/changePassword")
     public Result changePassword(@RequestBody Map<String, String> request, HttpServletRequest httpRequest) {
@@ -97,22 +97,73 @@ public class LoginController {
         }
         
         try {
-            // 获取用户ID
+            // 从 Token 获取 username（这个 username 是从数据库中读取的，可能包含恶意 SQL）
             String cleanToken = token.startsWith("Bearer ") ? token.substring(7) : token;
-            String userId = JwtUtils.parseJwt(cleanToken).get("id").toString();
+            String username = JwtUtils.parseJwt(cleanToken).get("username").toString();
+
+            System.out.println("username: " + username);
             
-            // 修改密码
-            boolean success = loginService.changePassword(userId, newPassword);
+            log.warn("【二次注入】当前用户: {}, 准备修改密码", username);
             
-            if (success) {
-                log.info("管理员ID: {} 密码修改成功", userId);
+            // ⚠️ 危险：Service 调用 Mapper，Mapper 中使用 ${} 拼接 username，触发二次注入
+            int affectedRows = loginService.changePassword(username, newPassword);
+            
+            log.warn("【二次注入】SQL执行完成，影响行数: {}", affectedRows);
+
+            
+            // 注意：这是漏洞演示代码，只要影响行数 > 0 就返回成功
+            // 即使影响了多行或不是预期的用户，也不做额外检查
+            // 在真实场景中，应该使用 #{} 而非 ${} 来防止注入
+            if (affectedRows > 0) {
                 return Result.success("密码修改成功");
             } else {
                 return Result.error("密码修改失败");
             }
         } catch (Exception e) {
-            log.error("JWT解析失败", e);
-            return Result.error("未授权访问");
+            log.error("修改密码失败，错误信息: {}", e.getMessage(), e);
+            return Result.error("未授权访问或修改失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 用户注册接口
+     * 默认注册为 guest 角色
+     */
+    @PostMapping("/register")
+    public Result register(@RequestBody Admin admin) {
+        log.info("注册请求：username={}", admin.getUsername());
+        
+        // 参数校验
+        if (admin.getUsername() == null || admin.getUsername().trim().isEmpty()) {
+            return Result.error("用户名不能为空");
+        }
+        if (admin.getPassword() == null || admin.getPassword().trim().isEmpty()) {
+            return Result.error("密码不能为空");
+        }
+        
+        try {
+            // 检查用户名是否已存在
+            if (loginService.checkUsernameExists(admin.getUsername())) {
+                return Result.error("用户名已存在");
+            }
+            
+            // 设置默认姓名（如果未提供）
+            if (admin.getName() == null || admin.getName().trim().isEmpty()) {
+                admin.setName(admin.getUsername());
+            }
+            
+            // 注册用户（默认 role='guest'）
+            boolean success = loginService.register(admin);
+            
+            if (success) {
+                log.info("用户注册成功：username={}", admin.getUsername());
+                return Result.success("注册成功");
+            } else {
+                return Result.error("注册失败");
+            }
+        } catch (Exception e) {
+            log.error("注册失败：{}", e.getMessage(), e);
+            return Result.error("注册失败：" + e.getMessage());
         }
     }
 }

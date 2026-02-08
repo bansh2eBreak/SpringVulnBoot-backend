@@ -23,9 +23,14 @@ public class LoginServiceImpl implements LoginService {
     }
     
     @Override
-    public boolean changePassword(String userId, String newPassword) {
+    public int changePassword(String username, String newPassword) {
+        return loginMapper.changePassword(username, newPassword);
+    }
+    
+    @Override
+    public boolean changePasswordByUserId(String userId, String newPassword) {
         try {
-            int result = loginMapper.changePassword(userId, newPassword);
+            int result = loginMapper.changePasswordByUserId(userId, newPassword);
             return result > 0;
         } catch (Exception e) {
             return false;
@@ -56,6 +61,26 @@ public class LoginServiceImpl implements LoginService {
     public boolean updateAdmin(Admin admin) {
         try {
             int result = loginMapper.updateAdmin(admin);
+            return result > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean checkUsernameExists(String username) {
+        try {
+            int count = loginMapper.checkUsernameExists(username);
+            return count > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean register(Admin admin) {
+        try {
+            int result = loginMapper.register(admin);
             return result > 0;
         } catch (Exception e) {
             return false;

@@ -24,13 +24,34 @@ public interface LoginMapper {
     Admin getAdminById(@Param("id") String id);
     
     /**
-     * 修改密码 - 存在CSRF漏洞（不验证旧密码）
+     * 修改密码 - 二次注入漏洞版本（使用 ${} 拼接 username）
+     * 
+     * ⚠️ 二次注入漏洞原理：
+     * 1. 第一次输入（注册）：恶意 username 如 "hacker' OR username='admin'#" 被正确转义存入数据库
+     * 2. 第二次使用（修改密码）：从数据库读取 username 后，使用 ${} 直接拼接到 SQL 中
+     * 3. 触发注入：恶意 SQL 被执行，同时修改多个用户的密码
+     * 
+     * 攻击示例：
+     * - 注册用户名：hacker' OR username='admin'#
+     * - 登录该账号，修改密码为 888888
+     * - 执行的 SQL：UPDATE admin SET password='888888' WHERE username='hacker' OR username='admin'#'
+     * - 结果：# 注释掉后面的单引号，同时修改了 hacker 和 admin 两个用户的密码！
+     * 
+     * @param username 用户名（从数据库读取，可能包含恶意 SQL）
+     * @param newPassword 新密码
+     * @return 影响行数
+     */
+    @Update("UPDATE admin SET password = #{newPassword} WHERE username = '${username}'")
+    int changePassword(@Param("username") String username, @Param("newPassword") String newPassword);
+    
+    /**
+     * 修改密码 - CSRF演示版本（通过 userId，不验证旧密码）
      * @param userId 用户ID
      * @param newPassword 新密码
      * @return 影响行数
      */
-    @Update("update admin set password = #{newPassword} where id = #{userId}")
-    int changePassword(@Param("userId") String userId, @Param("newPassword") String newPassword);
+    @Update("UPDATE admin SET password = #{newPassword} WHERE id = #{userId}")
+    int changePasswordByUserId(@Param("userId") String userId, @Param("newPassword") String newPassword);
     
     /**
      * 修改密码 - CSRF防护（验证旧密码）
@@ -85,5 +106,24 @@ public interface LoginMapper {
             "WHERE id = #{id}" +
             "</script>")
     int updateAdmin(Admin admin);
+
+    /**
+     * 检查用户名是否已存在
+     * @param username 用户名
+     * @return 存在返回 1，否则返回 0
+     */
+    @Select("SELECT COUNT(*) FROM admin WHERE username = #{username}")
+    int checkUsernameExists(@Param("username") String username);
+
+    /**
+     * 用户注册（使用预编译，安全）
+     * 注册的用户默认为 guest 角色
+     * 
+     * @param admin 包含 username, password, name
+     * @return 影响行数
+     */
+    @org.apache.ibatis.annotations.Insert("INSERT INTO admin(username, password, name, role) VALUES(#{username}, #{password}, #{name}, 'guest')")
+    @org.apache.ibatis.annotations.Options(useGeneratedKeys = true, keyProperty = "id")
+    int register(Admin admin);
 
 }

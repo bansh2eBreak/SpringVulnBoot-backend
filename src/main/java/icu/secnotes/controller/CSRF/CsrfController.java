@@ -48,7 +48,7 @@ public class CsrfController {
             String userId = JwtUtils.parseJwt(cleanToken).get("id").toString();
             
             // 直接修改密码，不验证旧密码 - 存在CSRF漏洞
-            boolean success = loginService.changePassword(userId, newPassword);
+            boolean success = loginService.changePasswordByUserId(userId, newPassword);
             
             if (success) {
                 log.info("用户ID: {} 密码修改成功（CSRF漏洞演示接口）", userId);
@@ -159,7 +159,7 @@ public class CsrfController {
             String userId = JwtUtils.parseJwt(cleanToken).get("id").toString();
             
             // 修改密码
-            boolean success = loginService.changePassword(userId, newPassword);
+            boolean success = loginService.changePasswordByUserId(userId, newPassword);
             
             if (success) {
                 log.info("用户ID: {} 密码修改成功（CSRF Token防护演示接口）", userId);

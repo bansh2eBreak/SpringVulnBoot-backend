@@ -21,6 +21,7 @@ public class PermissionConfig {
      */
     public static final List<String> PUBLIC_PATHS = Arrays.asList(
         "/login",                                       // 登录接口
+        "/register",                                    // 用户注册接口（允许公开访问）
         "/error",                                       // 错误页面
         "/favicon.ico",                                 // 网站图标
         "/openUrl/**",                                  // 任意URL跳转漏洞演示
