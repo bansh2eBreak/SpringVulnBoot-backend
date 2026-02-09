@@ -32,6 +32,10 @@ services:
         condition: service_healthy
     networks:
       - springvulnboot-network
+    # 资源限制配置（用于DoS漏洞靶场，防止占用过多宿主机资源）
+    mem_limit: 1g          # 内存硬限制：最多1GB
+    mem_reservation: 256m  # 内存软限制：保留256MB
+    cpus: 1.0              # CPU限制：最多1个核心
 
   # MySQL数据库服务
   mysql:
