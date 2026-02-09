@@ -118,9 +118,10 @@ docker compose up -d
   - Actuator未授权
   - Swagger未授权
 - 其他漏洞
-  - 拒绝服务漏洞
+  - 正则拒绝服务漏洞
   - IP地址伪造
   - SpEL表达式注入漏洞
+  - 科学计数法DoS
 
 ## 4、效果图展示
 
