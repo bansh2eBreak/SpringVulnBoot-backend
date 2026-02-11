@@ -42,7 +42,7 @@ public interface UserMapper {
     int count();
 
     /**
-     * 支持按字段排序的分页查询，获取用户列表数据
+     * 支持按字段排序的分页查询，获取用户列表数据（漏洞版本 - 使用 ${}）
      */
     @Select("select * from user order by ${orderBy} limit #{start}, #{pageSize}")
     List<User> pageOrderBy(@Param("orderBy") String orderBy, @Param("start") int start, @Param("pageSize") int pageSize);

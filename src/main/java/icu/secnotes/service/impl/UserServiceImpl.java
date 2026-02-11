@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageBean<User> pageOrderBy(String orderBy, Integer page, Integer pageSize) {
+    public PageBean<User> pageOrderByVuln(String orderBy, Integer page, Integer pageSize) {
         //1.获取总记录数
         int count = userMapper.count();
 
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         int start = (page - 1) * pageSize;
         List<User> userList = userMapper.pageOrderBy(orderBy, start, pageSize);
 
-        //3.分装PageBean对象
+        //3.封装PageBean对象
         return new PageBean<>(count, userList);
     }
 

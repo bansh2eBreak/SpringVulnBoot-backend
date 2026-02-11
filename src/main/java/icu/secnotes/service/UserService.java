@@ -9,7 +9,10 @@ public interface UserService {
 
     List<User> selectUserByUsername(String username);
 
-    PageBean<User> pageOrderBy(String orderBy, Integer page, Integer pageSize);
+    /**
+     * ORDER BY 注入 - 漏洞版本（使用 ${}）
+     */
+    PageBean<User> pageOrderByVuln(String orderBy, Integer page, Integer pageSize);
 
     List<User> selectUserSecByUsername(String username);
 

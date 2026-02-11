@@ -97,13 +97,4 @@ public class MybatisController {
     public Result getUserByUsername2(String username) {
         return Result.success(userService.selectUserByUsername(username));
     }
-
-    /**
-     * 分页查询
-     */
-    @GetMapping("/getUserByPage")
-    public Result getUserByPage(@RequestParam(defaultValue = "id") String orderBy, @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer pageSize) {
-        log.info("分页查询，参数：{} {} {}", page, pageSize, orderBy);
-        return Result.success(userService.pageOrderBy(orderBy, page, pageSize));
-    }
 }
