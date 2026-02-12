@@ -26,9 +26,12 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/SpringVulnBoot?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=Root1234
+      - LDAP_URLS=ldap://openldap:389
       - JAVA_OPTS=--add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED
     depends_on:
       mysql:
+        condition: service_healthy
+      openldap:
         condition: service_healthy
     networks:
       - springvulnboot-network
@@ -72,10 +75,51 @@ services:
     networks:
       - springvulnboot-network
 
+  # OpenLDAP服务（用于LDAP注入漏洞演示）
+  openldap:
+    image: osixia/openldap:1.5.0
+    container_name: springvulnboot-openldap
+    environment:
+      - LDAP_ORGANISATION=SecNotes
+      - LDAP_DOMAIN=secnotes.icu
+      - LDAP_ADMIN_PASSWORD=admin123
+      - LDAP_CONFIG_PASSWORD=config123
+      - LDAP_RFC2307BIS_SCHEMA=false
+      - LDAP_BACKEND=mdb
+      - LDAP_TLS=false
+      - LDAP_REMOVE_CONFIG_AFTER_SETUP=false
+    volumes:
+      - ldap-data:/var/lib/ldap
+      - ldap-config:/etc/ldap/slapd.d
+      - ./ldap/users-data.ldif:/ldif/users-data.ldif:ro
+      - ./ldap/init-ldap.sh:/init-ldap.sh:ro
+    # 端口映射（用于宿主机开发调试）
+    # ports:
+    #   - "389:389"
+    #   - "636:636"
+    networks:
+      - springvulnboot-network
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        /container/tool/run &
+        bash /init-ldap.sh
+        wait $!
+    healthcheck:
+      test: ["CMD", "ldapsearch", "-x", "-H", "ldap://localhost", "-b", "dc=secnotes,dc=icu", "-D", "cn=admin,dc=secnotes,dc=icu", "-w", "admin123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 networks:
   springvulnboot-network:
     driver: bridge
 
 volumes:
   mysql-data:
+    driver: local
+  ldap-data:
+    driver: local
+  ldap-config:
     driver: local 

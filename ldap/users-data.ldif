@@ -1,0 +1,211 @@
+# ==================================================
+# SpringVulnBoot LDAP 初始化数据
+# ==================================================
+
+# 创建组织单元：users
+dn: ou=users,dc=secnotes,dc=icu
+objectClass: organizationalUnit
+ou: users
+
+# 创建组织单元：groups
+dn: ou=groups,dc=secnotes,dc=icu
+objectClass: organizationalUnit
+ou: groups
+
+# ==================================================
+# 用户数据
+# ==================================================
+
+# 管理员用户
+dn: uid=admin,ou=users,dc=secnotes,dc=icu
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: admin
+cn: Administrator
+sn: Admin
+givenName: Admin
+displayName: Administrator
+mail: admin@example.com
+userPassword: admin123
+telephoneNumber: 13800000001
+employeeNumber: 10001
+departmentNumber: IT
+title: System Administrator
+description: role:admin - Super administrator account with all permissions
+uidNumber: 10001
+gidNumber: 10001
+homeDirectory: /home/admin
+loginShell: /bin/bash
+
+# 普通用户 - zhangsan
+dn: uid=zhangsan,ou=users,dc=secnotes,dc=icu
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: zhangsan
+cn: Zhang San
+sn: Zhang
+givenName: San
+displayName: Zhang San
+mail: zhangsan@example.com
+userPassword: zhangsan123
+telephoneNumber: 13800000002
+employeeNumber: 10002
+departmentNumber: Development
+title: Senior Developer
+description: role:developer - Development department employee
+uidNumber: 10002
+gidNumber: 10002
+homeDirectory: /home/zhangsan
+loginShell: /bin/bash
+
+# 普通用户 - lisi
+dn: uid=lisi,ou=users,dc=secnotes,dc=icu
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: lisi
+cn: Li Si
+sn: Li
+givenName: Si
+displayName: Li Si
+mail: lisi@example.com
+userPassword: lisi123
+telephoneNumber: 13800000003
+employeeNumber: 10003
+departmentNumber: Development
+title: Developer
+description: role:developer - Development department employee
+uidNumber: 10003
+gidNumber: 10003
+homeDirectory: /home/lisi
+loginShell: /bin/bash
+
+# 普通用户 - wangwu
+dn: uid=wangwu,ou=users,dc=secnotes,dc=icu
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: wangwu
+cn: Wang Wu
+sn: Wang
+givenName: Wu
+displayName: Wang Wu
+mail: wangwu@example.com
+userPassword: wangwu123
+telephoneNumber: 13800000004
+employeeNumber: 10004
+departmentNumber: Testing
+title: Test Engineer
+description: role:tester - Testing department employee
+uidNumber: 10004
+gidNumber: 10004
+homeDirectory: /home/wangwu
+loginShell: /bin/bash
+
+# 财务用户（包含敏感信息在 description 中）
+dn: uid=finance,ou=users,dc=secnotes,dc=icu
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: finance
+cn: Finance User
+sn: Finance
+givenName: User
+displayName: Finance User
+mail: finance@example.com
+userPassword: finance123
+telephoneNumber: 13800000005
+employeeNumber: 10005
+departmentNumber: Finance
+title: Finance Specialist
+description: role:finance salary:15000 - Finance department employee with access to sensitive financial data
+uidNumber: 10005
+gidNumber: 10005
+homeDirectory: /home/finance
+loginShell: /bin/bash
+
+# HR用户
+dn: uid=hr,ou=users,dc=secnotes,dc=icu
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: hr
+cn: HR User
+sn: HR
+givenName: User
+displayName: HR User
+mail: hr@example.com
+userPassword: hr123
+telephoneNumber: 13800000006
+employeeNumber: 10006
+departmentNumber: HR
+title: HR Specialist
+description: role:hr - Human resources department employee
+uidNumber: 10006
+gidNumber: 10006
+homeDirectory: /home/hr
+loginShell: /bin/bash
+
+# 访客用户（用于测试低权限）
+dn: uid=guest,ou=users,dc=secnotes,dc=icu
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: guest
+cn: Guest User
+sn: Guest
+givenName: User
+displayName: Guest User
+mail: guest@example.com
+userPassword: guest123
+telephoneNumber: 13800000007
+employeeNumber: 10007
+departmentNumber: Guest
+title: Guest
+description: role:guest - Temporary guest account with limited permissions
+uidNumber: 10007
+gidNumber: 10007
+homeDirectory: /home/guest
+loginShell: /bin/bash
+
+# ==================================================
+# 用户组数据
+# ==================================================
+
+# 管理员组
+dn: cn=administrators,ou=groups,dc=secnotes,dc=icu
+objectClass: groupOfNames
+cn: administrators
+description: System administrators group
+member: uid=admin,ou=users,dc=secnotes,dc=icu
+
+# 开发组
+dn: cn=developers,ou=groups,dc=secnotes,dc=icu
+objectClass: groupOfNames
+cn: developers
+description: Developers group
+member: uid=zhangsan,ou=users,dc=secnotes,dc=icu
+member: uid=lisi,ou=users,dc=secnotes,dc=icu
+
+# 测试组
+dn: cn=testers,ou=groups,dc=secnotes,dc=icu
+objectClass: groupOfNames
+cn: testers
+description: Testers group
+member: uid=wangwu,ou=users,dc=secnotes,dc=icu
+
+# 财务组
+dn: cn=finance,ou=groups,dc=secnotes,dc=icu
+objectClass: groupOfNames
+cn: finance
+description: Finance department group
+member: uid=finance,ou=users,dc=secnotes,dc=icu
+
+# HR组
+dn: cn=hr,ou=groups,dc=secnotes,dc=icu
+objectClass: groupOfNames
+cn: hr
+description: Human resources group
+member: uid=hr,ou=users,dc=secnotes,dc=icu

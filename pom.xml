@@ -239,6 +239,12 @@
             <version>3.0.9</version>
             <type>pom</type>
         </dependency>
+
+        <!-- Spring LDAP（用于LDAP注入漏洞演示） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-ldap</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

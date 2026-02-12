@@ -123,6 +123,7 @@ docker compose up -d
   - IP地址伪造
   - SpEL表达式注入漏洞
   - 科学计数法DoS
+  - LDAP注入
 
 ## 4、效果图展示
 
