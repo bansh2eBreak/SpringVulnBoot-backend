@@ -9,12 +9,12 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - app
+      - backend
     networks:
       - springvulnboot-network
 
   # 后端服务
-  app:
+  backend:
     build:
       context: .
       dockerfile: Dockerfile
@@ -115,6 +115,7 @@ services:
 networks:
   springvulnboot-network:
     driver: bridge
+    name: springvulnboot-network
 
 volumes:
   mysql-data:
