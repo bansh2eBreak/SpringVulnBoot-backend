@@ -2,6 +2,7 @@ package icu.secnotes.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -15,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 // 禁用SecurityConfig，当需要启用，请取消注释，这样就可以开启Actuator授权
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity  // 开启方法级安全，使 @PreAuthorize 在 GraphQL Resolver 上生效
 public class SecurityConfig {
 
     @Bean

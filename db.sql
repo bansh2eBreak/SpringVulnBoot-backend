@@ -17,10 +17,28 @@ create table if not exists Admin
         unique (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 插入测试数据到Admin表
-INSERT INTO Admin (name, username, password, token, role, create_time) VALUES ('系统管理员','admin', '123456', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)), 'admin', NOW());
-INSERT INTO Admin (name, username, password, token, role, create_time) VALUES ('审计员','zhangsan', '123456', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)), 'admin', NOW());
-INSERT INTO Admin (name, username, password, token, role, create_time) VALUES ('访客用户','guest', 'guest123', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)), 'guest', NOW());
+-- 插入测试数据到Admin表（id 固定，供 GraphQL 演示使用）
+INSERT INTO Admin (id, name, username, password, token, role, create_time) VALUES (1, '系统管理员', 'admin',    '123456',   CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)), 'admin', NOW());
+INSERT INTO Admin (id, name, username, password, token, role, create_time) VALUES (2, '审计员',   'zhangsan', '123456',   CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)), 'admin', NOW());
+INSERT INTO Admin (id, name, username, password, token, role, create_time) VALUES (3, '访客用户', 'guest',    'guest123', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)), 'guest', NOW());
+
+-- 创建员工信息表（GraphQL 漏洞演示数据源）
+-- id 与 Admin.id 一一对应，GraphQL 查询时 JOIN 两表获取完整信息
+create table if not exists graphql_employee
+(
+    id             int           not null primary key comment '对应 Admin 用户 ID',
+    email          varchar(100)  not null comment '邮箱',
+    salary         decimal(10,2) null comment '薪资（敏感字段）',
+    ssn            varchar(20)   null comment '社保号（敏感字段）',
+    internal_notes text          null comment '内部备注（敏感字段）',
+    constraint fk_graphql_employee_admin foreign key (id) references Admin (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='员工信息表（GraphQL 漏洞演示数据源）';
+
+-- 插入员工数据（对应 Admin 表的 admin / zhangsan / guest）
+INSERT INTO graphql_employee (id, email, salary, ssn, internal_notes) VALUES
+(1, 'admin@company.com',    150000.00, '123-45-6789', '系统管理员，拥有最高权限'),
+(2, 'zhangsan@company.com',  80000.00, '234-56-7890', '审计员，负责系统日志审计'),
+(3, 'guest@company.com',     40000.00, '345-67-8901', '访客账号，权限受限');
 
 -- 创建留言表
 create table if not exists MessageBoard

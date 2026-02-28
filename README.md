@@ -6,7 +6,7 @@
 
 [前端工程](https://github.com/bansh2eBreak/SpringVulnBoot-frontend)是基于流行的vue-admin-template基础模板进行改改改，[后端工程](https://github.com/bansh2eBreak/SpringVulnBoot-backend)是基于JDK11+SpringBoot 2.7.14开发的。
 
-‼️重大更新‼️：靶场前后端支持菜单级权限控制！
+支持 **admin** 和 **guest** 两种角色，菜单与接口均实现权限隔离，可用于模拟不同权限等级的攻击场景。
 
 ![info.png](images/springvulnboot_network.jpg)
 
@@ -53,7 +53,36 @@ docker compose up -d
 
 - ⚠️禁止将靶场部署在生产环境，以免被恶意利用
 - ⚠️严禁利用本靶场技术和工具对未授权的网站或系统进行非法攻击，否则后果自负
-  
+
+### 2.3、更新步骤
+
+> **为什么更新时需要重建数据库 Volume？**
+>
+> MySQL 容器通过 `docker-entrypoint-initdb.d/` 目录中的 `db.sql` 来初始化数据库，但该初始化脚本**只在数据目录为空时执行一次**。由于项目使用了具名 Volume（`mysql-data`）持久化数据，容器重启后 MySQL 检测到数据目录已存在，会直接跳过初始化脚本。
+>
+> 因此，当靶场版本更新涉及数据库结构变更（新增表、修改字段等）时，**必须先删除旧的 Volume**，让 MySQL 重新执行最新的 `db.sql`。
+
+```bash
+# 进入后端项目目录
+cd SpringVulnBoot-backend
+
+# 拉取最新代码
+git pull
+
+# 1. 停止并删除所有容器及 Volume（⚠️ 会清空数据库数据）
+docker compose down -v
+
+# 2. 重新构建镜像并启动（MySQL 会自动执行最新的 db.sql）
+docker compose up -d --build
+```
+
+> 💡 如果不想丢失数据库中的自定义数据，也可以手动进入 MySQL 容器执行增量 SQL：
+>
+> ```bash
+> docker exec -it springvulnboot-mysql mysql -uroot -pRoot1234 SpringVulnBoot
+> # 然后手动执行 db.sql 中新增的建表/插入语句
+> ```
+
 ## 3、已实现的漏洞
 
 - SQLi注入
@@ -74,6 +103,9 @@ docker compose up -d
   - Runtime方式
   - ProcessBuilder方式
 - 批量赋值漏洞
+- GraphQL漏洞
+  - GraphQL字段泄漏
+  - GraphQL越权查询
 - 任意URL跳转
 - 路径穿越漏洞
 - 文件上传漏洞

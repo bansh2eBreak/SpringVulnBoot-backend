@@ -51,7 +51,8 @@ public class PermissionConfig {
         "/sqli/**",           // SQL注入
         "/xss/**",            // XSS跨站脚本
         "/rce/**",            // 任意命令执行（后端接口路径为 /rce）
-        "/massAssignment/**"  // Mass Assignment 批量赋值漏洞
+        "/massAssignment/**", // Mass Assignment 批量赋值漏洞
+        "/api/graphql"        // GraphQL 漏洞演示（guest 和 admin 均可访问，字段级安全由 @PreAuthorize 控制）
     );
 
     /**

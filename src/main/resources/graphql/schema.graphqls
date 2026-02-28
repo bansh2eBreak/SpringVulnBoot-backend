@@ -1,0 +1,47 @@
+# GraphQL Schema 定义
+# 用于演示 GraphQL 安全漏洞
+
+# ==================== 查询入口 ====================
+type Query {
+    # 字段泄露-漏洞版：查询单个用户（无字段级权限控制）
+    user(id: ID!): User
+
+    # 字段泄露-漏洞版：查询用户列表
+    users(limit: Int): [User!]!
+
+    # 字段泄露-安全版：查询单个用户（敏感字段有字段级权限控制）
+    secureUser(id: ID!): SecureUser
+
+    # IDOR-漏洞版：直接信任客户端传入的 id，不验证是否是当前登录用户
+    myProfile(id: ID!): User
+
+    # IDOR-安全版：接受 id 参数，但服务端验证必须与 JWT 中的当前用户一致
+    secureMyProfile(id: ID!): User
+}
+
+# ==================== 漏洞版用户类型 ====================
+# 敏感字段 Resolver 无任何权限保护，Introspection 可直接泄露字段名并查询数据
+type User {
+    id: ID!
+    username: String!
+    email: String!
+    role: String!
+
+    salary: Float         # 薪资（敏感，无权限保护）
+    ssn: String           # 社保号（敏感，无权限保护）
+    internalNotes: String # 内部备注（敏感，无权限保护）
+}
+
+# ==================== 安全版用户类型 ====================
+# 敏感字段 Resolver 加了 @PreAuthorize("hasRole('ADMIN')")
+# 即使攻击者知道字段名，没有 ADMIN 角色也无法获取数据
+type SecureUser {
+    id: ID!
+    username: String!
+    email: String!
+    role: String!
+
+    salary: Float         # 薪资（敏感，受字段级权限保护）
+    ssn: String           # 社保号（敏感，受字段级权限保护）
+    internalNotes: String # 内部备注（敏感，受字段级权限保护）
+}

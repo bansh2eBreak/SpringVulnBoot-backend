@@ -245,6 +245,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-ldap</artifactId>
         </dependency>
+
+        <!-- Spring GraphQL（用于GraphQL安全漏洞演示） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-graphql</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

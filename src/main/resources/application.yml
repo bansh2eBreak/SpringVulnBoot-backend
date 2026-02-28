@@ -11,7 +11,17 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-      
+  
+  # GraphQL 配置（用于 GraphQL 安全漏洞演示）
+  graphql:
+    # GraphQL 端点路径
+    path: /api/graphql
+    
+    # Schema 自省功能（漏洞演示）
+    schema:
+      introspection:
+        enabled: true  # 漏洞：开启 Introspection，暴露敏感字段结构
+    
 # MyBatis配置
 mybatis:
   configuration:
