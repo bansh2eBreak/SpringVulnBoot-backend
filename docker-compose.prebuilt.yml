@@ -1,0 +1,124 @@
+# 预构建镜像版部署文件
+#
+# 前后端镜像已通过 GitHub Actions 自动构建并发布到 GitHub Container Registry，
+# 使用此文件可跳过本地编译，直接拉取镜像启动，适合快速体验场景。
+#
+# 用法：
+#   docker compose -f docker-compose.prebuilt.yml up -d
+#
+# 更新到最新版：
+#   docker compose -f docker-compose.prebuilt.yml pull
+#   docker compose -f docker-compose.prebuilt.yml up -d
+#
+# 如需指定版本（对应 Git Tag），修改下方镜像标签，例如：
+#   image: ghcr.io/bansh2ebreak/springvulnboot-frontend:v1.2.0
+
+services:
+  # 前端服务（预构建镜像）
+  frontend:
+    image: ghcr.io/bansh2ebreak/springvulnboot-frontend:latest
+    container_name: springvulnboot-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - springvulnboot-network
+
+  # 后端服务（预构建镜像）
+  backend:
+    image: ghcr.io/bansh2ebreak/springvulnboot-backend:latest
+    container_name: springvulnboot-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/SpringVulnBoot?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Root1234
+      - LDAP_URLS=ldap://openldap:389
+      - JAVA_OPTS=--add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED
+    depends_on:
+      mysql:
+        condition: service_healthy
+      openldap:
+        condition: service_healthy
+    networks:
+      - springvulnboot-network
+    mem_limit: 1g
+    mem_reservation: 256m
+    cpus: 1.0
+
+  # MySQL数据库服务
+  mysql:
+    image: mysql:8.0
+    container_name: springvulnboot-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=Root1234
+      - MYSQL_DATABASE=SpringVulnBoot
+      - TZ=Asia/Shanghai
+      - LANG=C.UTF-8
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db.sql:/docker-entrypoint-initdb.d/01-init.sql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_0900_ai_ci --lower_case_table_names=1 --init-connect='SET NAMES utf8mb4'
+    networks:
+      - springvulnboot-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pRoot1234"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # Redis服务（仅内部访问）
+  redis:
+    image: redis:6.2
+    container_name: springvulnboot-redis
+    command: redis-server --protected-mode no
+    networks:
+      - springvulnboot-network
+
+  # OpenLDAP服务（用于LDAP注入漏洞演示）
+  openldap:
+    image: osixia/openldap:1.5.0
+    container_name: springvulnboot-openldap
+    environment:
+      - LDAP_ORGANISATION=SecNotes
+      - LDAP_DOMAIN=secnotes.icu
+      - LDAP_ADMIN_PASSWORD=admin123
+      - LDAP_CONFIG_PASSWORD=config123
+      - LDAP_RFC2307BIS_SCHEMA=false
+      - LDAP_BACKEND=mdb
+      - LDAP_TLS=false
+      - LDAP_REMOVE_CONFIG_AFTER_SETUP=false
+    volumes:
+      - ldap-data:/var/lib/ldap
+      - ldap-config:/etc/ldap/slapd.d
+      - ./ldap/users-data.ldif:/ldif/users-data.ldif:ro
+      - ./ldap/init-ldap.sh:/init-ldap.sh:ro
+    networks:
+      - springvulnboot-network
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        /container/tool/run &
+        bash /init-ldap.sh
+        wait $!
+    healthcheck:
+      test: ["CMD", "ldapsearch", "-x", "-H", "ldap://localhost", "-b", "dc=secnotes,dc=icu", "-D", "cn=admin,dc=secnotes,dc=icu", "-w", "admin123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  springvulnboot-network:
+    driver: bridge
+    name: springvulnboot-network
+
+volumes:
+  mysql-data:
+    driver: local
+  ldap-data:
+    driver: local
+  ldap-config:
+    driver: local

@@ -21,6 +21,50 @@
 
 ### 2.2、安装步骤
 
+提供两种部署方式，按需选择：
+
+| 方式 | 适合场景 | 耗时 |
+|------|---------|------|
+| **方式一：预构建镜像（推荐）** | 快速体验，无需本地编译 | 快（仅下载镜像） |
+| **方式二：源码构建** | 需要修改源码、二次开发 | 慢（需编译 Java + 打包前端） |
+
+---
+
+#### 方式一：预构建镜像部署（推荐）
+
+前后端镜像已通过 GitHub Actions 自动构建并发布至 GitHub Container Registry，直接拉取即可，**无需本地安装 JDK、Maven、Node.js 等工具链**。
+
+1、克隆后端项目（仅需后端仓库，用于获取配置文件）
+
+```bash
+git clone https://github.com/bansh2eBreak/SpringVulnBoot-backend.git
+cd SpringVulnBoot-backend
+```
+
+2、启动所有服务（镜像自动从 ghcr.io 拉取）
+
+```bash
+docker compose -f docker-compose.prebuilt.yml up -d
+```
+
+3、访问服务
+
+- 前端页面：[http://localhost](http://localhost)
+- 后端API：[http://localhost:8080](http://localhost:8080)
+
+4、更新到最新版本
+
+```bash
+docker compose -f docker-compose.prebuilt.yml pull
+docker compose -f docker-compose.prebuilt.yml up -d
+```
+
+---
+
+#### 方式二：源码构建部署
+
+从源码构建可完整定制代码，适合二次开发或代码审计学习。
+
 1、克隆前后端项目到同级目录
 
 ```bash
@@ -34,13 +78,13 @@ git clone https://github.com/bansh2eBreak/SpringVulnBoot-frontend.git
 git clone https://github.com/bansh2eBreak/SpringVulnBoot-backend.git
 ```
 
-2、启动服务
+2、启动服务（首次启动需下载依赖并编译，耗时较长）
 
 ```bash
 # 进入后端项目目录
 cd SpringVulnBoot-backend
 
-# 启动所有服务
+# 构建镜像并启动所有服务
 docker compose up -d
 ```
 
@@ -48,6 +92,8 @@ docker compose up -d
 
 - 前端页面：[http://localhost](http://localhost)
 - 后端API：[http://localhost:8080](http://localhost:8080)
+
+---
 
 4、注意
 
