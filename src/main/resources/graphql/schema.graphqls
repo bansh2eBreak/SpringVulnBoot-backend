@@ -17,6 +17,12 @@ type Query {
 
     # IDOR-安全版：接受 id 参数，但服务端验证必须与 JWT 中的当前用户一致
     secureMyProfile(id: ID!): User
+
+    # SQL注入-漏洞版：keyword 直接拼接到 SQL，存在注入风险
+    searchUsers(keyword: String!): [User!]!
+
+    # SQL注入-安全版：使用参数化查询，防止注入
+    secureSearchUsers(keyword: String!): [User!]!
 }
 
 # ==================== 漏洞版用户类型 ====================

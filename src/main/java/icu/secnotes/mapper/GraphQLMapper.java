@@ -5,18 +5,17 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 /**
- * GraphQL 员工数据 Mapper
+ * GraphQL 漏洞演示 Mapper
  *
  * 查询时 JOIN Admin 表（获取 username、role）和 graphql_employee 表（获取敏感字段），
  * 使 GraphQL 用户 ID 与登录系统（JWT）中的 Admin.id 保持一致，便于 IDOR 演示。
  */
 @Mapper
 @Repository
-public interface GraphQLEmployeeMapper {
+public interface GraphQLMapper {
 
     /**
      * 根据 ID 查询员工完整信息（含敏感字段）
@@ -43,4 +42,23 @@ public interface GraphQLEmployeeMapper {
             "e.email, e.salary, e.ssn, e.internal_notes AS internalNotes " +
             "FROM Admin a JOIN graphql_employee e ON a.id = e.id")
     List<GraphQLUser> findAll();
+
+    /**
+     * SQL注入-漏洞版：${keyword} 直接拼接，存在注入风险
+     * 攻击 Payload：' OR 1=1 -- 
+     */
+    @Select("SELECT a.id, a.username, a.role, " +
+            "e.email, e.salary, e.ssn, e.internal_notes AS internalNotes " +
+            "FROM Admin a JOIN graphql_employee e ON a.id = e.id " +
+            "WHERE a.username LIKE '%${keyword}%'")
+    List<GraphQLUser> searchByKeyword(@Param("keyword") String keyword);
+
+    /**
+     * SQL注入-安全版：#{keyword} 参数化查询，防止注入
+     */
+    @Select("SELECT a.id, a.username, a.role, " +
+            "e.email, e.salary, e.ssn, e.internal_notes AS internalNotes " +
+            "FROM Admin a JOIN graphql_employee e ON a.id = e.id " +
+            "WHERE a.username LIKE CONCAT('%', #{keyword}, '%')")
+    List<GraphQLUser> secureSearchByKeyword(@Param("keyword") String keyword);
 }

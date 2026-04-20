@@ -152,6 +152,7 @@ docker compose up -d --build
 - GraphQL漏洞
   - GraphQL字段泄漏
   - GraphQL越权查询
+  - GraphQL SQL注入漏洞
 - 任意URL跳转
 - 路径穿越漏洞
 - 文件上传漏洞
