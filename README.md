@@ -197,6 +197,7 @@ docker compose up -d --build
   - 列目录漏洞
   - Actuator未授权
   - Swagger未授权
+  - CORS 配置错误
 - 其他漏洞
   - 正则拒绝服务漏洞
   - IP地址伪造

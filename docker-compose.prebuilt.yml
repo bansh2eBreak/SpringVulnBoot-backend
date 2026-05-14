@@ -20,6 +20,7 @@ services:
     container_name: springvulnboot-frontend
     ports:
       - "80:80"
+      - "81:81"   # CORS 漏洞演示 - 攻击者模拟站点（与靶场前端端口 80 属于不同 Origin）
     depends_on:
       - backend
     networks:

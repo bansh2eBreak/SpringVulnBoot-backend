@@ -72,7 +72,8 @@ public class PermissionConfig {
         "/components/**",     // 组件漏洞
         "/ipspoofing/**",     // IP伪造漏洞
         "/redos/**",          // ReDoS 正则拒绝服务
-        "/spel/**"            // SpEL 表达式注入
+        "/spel/**",           // SpEL 表达式注入
+        "/cors/**"            // CORS 配置漏洞
     );
 
     /**

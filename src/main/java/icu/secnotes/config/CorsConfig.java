@@ -13,42 +13,54 @@ import java.util.Properties;
 @Configuration
 public class CorsConfig {
 
-    /**
-     * 这是因为浏览器的安全机制对跨域请求的 Cookie 处理有严格的限制。当你的前端应用（http://10.225.13.70:9528）向后端服务（http://10.225.13.70:8080）发起跨域请求，并且需要携带 Cookie（例如 JSESSIONID 用于 Session 验证）时，浏览器会执行以下安全检查：
-     *
-     * 检查 Access-Control-Allow-Origin： 浏览器会检查后端响应头中的 Access-Control-Allow-Origin 字段。如果这个字段的值是通配符 *，或者与发起请求的源（http://10.225.13.70:9528）不匹配，浏览器就会阻止请求，以防止跨站请求伪造（CSRF）攻击。
-     *
-     * 检查 Access-Control-Allow-Credentials： 如果 Access-Control-Allow-Origin 匹配，浏览器还会检查 Access-Control-Allow-Credentials 字段。如果这个字段的值不是 true，或者缺失，浏览器也会阻止请求，因为这表示服务器没有明确允许客户端携带凭据（包括 Cookie）。
-     *
-     * 为什么不能使用 *？
-     *
-     * 使用通配符 * 作为 Access-Control-Allow-Origin 的值，虽然在某些情况下可以简化配置，但是在需要携带凭据的跨域请求中，这是绝对禁止的。因为如果允许任何来源的网站都携带用户的 Cookie 发起跨域请求，那么恶意网站就可以轻易地伪造请求，窃取用户的敏感信息。
-     *
-     * 精确指定来源地址的重要性
-     *
-     * 通过将 Access-Control-Allow-Origin 设置为精确的来源地址（http://10.225.13.70:9528），你就明确告诉浏览器，只有来自这个特定来源的请求才被允许携带 Cookie。这样可以有效地防止其他网站利用你的用户的 Cookie 发起跨域请求，提高了安全性。
-     *
-     * 总结
-     *
-     * 为了确保跨域请求的安全性，并允许浏览器携带 Cookie，你必须：
-     *
-     * 将 Access-Control-Allow-Origin 设置为精确的来源地址，而不是通配符 *。
-     * 将 Access-Control-Allow-Credentials 设置为 true。
-     * 这两个设置是缺一不可的，只有同时满足这两个条件，浏览器才会允许跨域请求携带 Cookie。
-     */
-
     @Bean
     public CorsFilter corsFilter() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowCredentials(true);
-        // 靶场允许任意来源，支持任意 IP/端口部署
-        // 注意：allowCredentials(true) 时不能用 addAllowedOrigin("*")，必须用 addAllowedOriginPattern("*")
-        corsConfiguration.addAllowedOriginPattern("*");
-        corsConfiguration.addAllowedMethod("*"); // 允许所有请求方法
-        corsConfiguration.addAllowedHeader("*"); // 允许所有请求头部
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
+
+        // ============================================================
+        // CORS 漏洞演示 - 路径级 CORS 配置
+        // ============================================================
+
+        // 漏洞1：Origin 完全信任 —— addAllowedOriginPattern("*") + allowCredentials(true)
+        // 浏览器会携带用户凭证向任意 Origin 反射 Access-Control-Allow-Origin，攻击者可读取响应
+        CorsConfiguration vuln1Config = new CorsConfiguration();
+        vuln1Config.setAllowCredentials(true);
+        vuln1Config.addAllowedOriginPattern("*");
+        vuln1Config.addAllowedMethod("*");
+        vuln1Config.addAllowedHeader("*");
+        source.registerCorsConfiguration("/cors/vuln1/**", vuln1Config);
+
+        // 漏洞2：Origin 校验可绕过 —— 使用 contains("127.0.0.1") 做字符串匹配
+        // 开发者本意：只允许本机（127.0.0.1）访问
+        // 缺陷：端口 80 和端口 81 是不同 Origin，但都包含 "127.0.0.1"，攻击者页面（:81）照样绕过
+        // addAllowedOriginPattern("*127.0.0.1*") 等价于代码中 origin.contains("127.0.0.1") 的模糊匹配
+        CorsConfiguration vuln2Config = new CorsConfiguration();
+        vuln2Config.setAllowCredentials(true);
+        vuln2Config.addAllowedOriginPattern("*127.0.0.1*");
+        vuln2Config.addAllowedMethod("*");
+        vuln2Config.addAllowedHeader("*");
+        source.registerCorsConfiguration("/cors/vuln2/**", vuln2Config);
+
+        // 安全版：严格白名单 —— 仅允许指定 Origin，其他来源一律拒绝
+        // 靶场前端（127.0.0.1:80）不在白名单内，访问该接口浏览器会报 CORS 错误，演示防御效果
+        CorsConfiguration secureConfig = new CorsConfiguration();
+        secureConfig.setAllowCredentials(true);
+        secureConfig.addAllowedOrigin("http://trusted.secnotes.icu");
+        secureConfig.addAllowedMethod("*");
+        secureConfig.addAllowedHeader("*");
+        source.registerCorsConfiguration("/cors/secure/**", secureConfig);
+
+        // ============================================================
+        // 全局配置 —— 靶场部署便利性，允许任意来源（非 /cors/** 路径使用）
+        // ============================================================
+        CorsConfiguration globalConfig = new CorsConfiguration();
+        globalConfig.setAllowCredentials(true);
+        // 注意：allowCredentials(true) 时不能用 addAllowedOrigin("*")，必须用 addAllowedOriginPattern("*")
+        globalConfig.addAllowedOriginPattern("*");
+        globalConfig.addAllowedMethod("*");
+        globalConfig.addAllowedHeader("*");
+        source.registerCorsConfiguration("/**", globalConfig);
+
         return new CorsFilter(source);
     }
 
