@@ -1,9 +1,7 @@
 package icu.secnotes.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
@@ -22,14 +20,8 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("SpringVulnBoot API文档")
                         .description("安全漏洞靶场的Swagger API文档")
-                        .version("1.0.0")
-                        .contact(new Contact()
-                                .name("Security Team")
-                                .url("https://github.com/bansh2eBreak/SpringVulnBoot-backend"))
-                        .license(new License()
-                                .name("MIT License")
-                                .url("https://opensource.org/licenses/MIT")))
-                                
+                        .version("1.0.0"))
+
                 // JWT认证，APIKEY类型，header为authorization，原样传递token
                 .addSecurityItem(new SecurityRequirement().addList("JWT"))
                 .schemaRequirement("JWT", new SecurityScheme()

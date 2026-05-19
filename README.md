@@ -4,7 +4,7 @@
 
 基于 Vue + SpringBoot 构建的 Java 安全靶场，一个专为安全爱好者、渗透测试和代码审计人员打造的实战演练平台。
 
-[前端工程](https://github.com/bansh2eBreak/SpringVulnBoot-frontend)是基于流行的vue-admin-template基础模板进行改改改，[后端工程](https://github.com/bansh2eBreak/SpringVulnBoot-backend)是基于JDK11+SpringBoot 2.7.14开发的。
+前端工程基于流行的vue-admin-template基础模板进行改改改，后端工程是基于JDK11+SpringBoot 2.7.14开发的。
 
 支持 **admin** 和 **guest** 两种角色，菜单与接口均实现权限隔离，可用于模拟不同权限等级的攻击场景。
 
@@ -17,65 +17,21 @@
 - Docker
 - Docker Compose
 - Docker镜像加速
-- Git
 
 ### 2.2、安装步骤
 
-提供两种部署方式，按需选择：
+从源码构建部署，适合二次开发或代码审计学习。
 
-| 方式 | 适合场景 | 耗时 |
-|------|---------|------|
-| **方式一：预构建镜像（推荐）** | 快速体验，无需本地编译 | 快（仅下载镜像） |
-| **方式二：源码构建** | 需要修改源码、二次开发 | 慢（需编译 Java + 打包前端） |
-
----
-
-#### 方式一：预构建镜像部署（推荐）
-
-前后端镜像已通过 GitHub Actions 自动构建并发布至 GitHub Container Registry，直接拉取即可，**无需本地安装 JDK、Maven、Node.js 等工具链**。
-
-1、克隆后端项目（仅需后端仓库，用于获取配置文件）
-
-```bash
-git clone https://github.com/bansh2eBreak/SpringVulnBoot-backend.git
-cd SpringVulnBoot-backend
-```
-
-2、启动所有服务（镜像自动从 ghcr.io 拉取）
-
-```bash
-docker compose -f docker-compose.prebuilt.yml up -d
-```
-
-3、访问服务
-
-- 前端页面：[http://localhost](http://localhost)
-- 后端API：[http://localhost:8080](http://localhost:8080)
-
-4、更新到最新版本
-
-```bash
-docker compose -f docker-compose.prebuilt.yml pull
-docker compose -f docker-compose.prebuilt.yml up -d
-```
-
----
-
-#### 方式二：源码构建部署
-
-从源码构建可完整定制代码，适合二次开发或代码审计学习。
-
-1、克隆前后端项目到同级目录
+1、将前后端源码包解压到同一父目录
 
 ```bash
 # 创建项目目录
 mkdir SpringVulnBoot && cd SpringVulnBoot
 
-# 克隆前端项目
-git clone https://github.com/bansh2eBreak/SpringVulnBoot-frontend.git
-
-# 克隆后端项目
-git clone https://github.com/bansh2eBreak/SpringVulnBoot-backend.git
+# 将前端、后端源码包分别解压到此目录下，最终目录结构示例：
+# SpringVulnBoot/
+# ├── SpringVulnBoot-frontend/
+# └── SpringVulnBoot-backend/
 ```
 
 2、启动服务（首次启动需下载依赖并编译，耗时较长）
@@ -112,8 +68,7 @@ docker compose up -d
 # 进入后端项目目录
 cd SpringVulnBoot-backend
 
-# 拉取最新代码
-git pull
+# 用新版本源码包覆盖当前目录
 
 # 1. 停止并删除所有容器及 Volume（⚠️ 会清空数据库数据）
 docker compose down -v
