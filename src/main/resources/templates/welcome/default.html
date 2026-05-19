@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SpringVulnBoot SSTI Demo - Default Template</title>
+    <style>
+        body { font-family: -apple-system, "Microsoft YaHei", sans-serif; padding: 30px; background: #f6f8fa; }
+        .card { background: #fff; padding: 24px; border-radius: 8px; max-width: 720px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+        h2 { color: #2c3e50; margin: 0 0 12px 0; }
+        .tag { display: inline-block; padding: 2px 10px; background: #909399; color: #fff; border-radius: 10px; font-size: 12px; }
+        code { background: #f0f2f5; padding: 2px 6px; border-radius: 3px; color: #d63384; }
+        .ok { color: #67C23A; font-weight: bold; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>SpringVulnBoot 默认欢迎页 <span class="tag">Default</span></h2>
+    <p>这是一个固定模板（<code>templates/welcome/default.html</code>）。</p>
+    <p>
+        用户传入的语言参数（已通过 <code>th:text</code> 安全输出，不会被解析为表达式）：<br>
+        <code th:text="${lang}">unknown</code>
+    </p>
+    <hr>
+    <p class="ok">
+        ✅ 即使你传入 <code>__${...}__::.x</code> 之类的 Fragment Expression，
+        view 名也始终是 <code>welcome/default</code>，不会触发 SSTI。
+    </p>
+</div>
+</body>
+</html>

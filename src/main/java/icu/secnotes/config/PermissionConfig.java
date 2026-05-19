@@ -31,7 +31,8 @@ public class PermissionConfig {
         "/swagger-ui.html",
         "/v3/api-docs/**",                              // Swagger API文档
         "/xml/xxe-ssrf/dtd",                            // XXE SSRF 漏洞演示（DTD解析）
-        "/fileInclusion/**"                             // 文件包含漏洞演示（需要无认证访问）
+        "/fileInclusion/**",                            // 文件包含漏洞演示（需要无认证访问）
+        "/ssti/**"                                      // SSTI 模板注入漏洞（iframe 渲染 HTML，需无认证访问）
     );
 
     /**

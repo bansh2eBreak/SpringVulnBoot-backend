@@ -22,6 +22,11 @@ spring:
       introspection:
         enabled: true  # 漏洞：开启 Introspection，暴露敏感字段结构
     
+# SSTI 报错回显依赖：让 Spring Boot 错误页面显示异常 message（含命令执行结果）
+server:
+  error:
+    include-message: always
+
 # MyBatis配置
 mybatis:
   configuration:

@@ -28,6 +28,8 @@
     </scm>
     <properties>
         <java.version>11</java.version>
+        <!-- SSTI 漏洞演示：降级 Thymeleaf 到 3.0.12 之前版本，复现经典 viewName 注入 -->
+        <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
     </properties>
     <dependencies>
         <dependency>
@@ -250,6 +252,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-graphql</artifactId>
+        </dependency>
+
+        <!-- Thymeleaf（用于模板注入 SSTI 漏洞演示） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
     </dependencies>

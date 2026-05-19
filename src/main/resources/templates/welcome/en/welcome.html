@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome - SpringVulnBoot SSTI Demo</title>
+    <style>
+        body { font-family: -apple-system, Arial, sans-serif; padding: 30px; background: #f6f8fa; }
+        .card { background: #fff; padding: 24px; border-radius: 8px; max-width: 720px; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+        h2 { color: #2c3e50; margin: 0 0 12px 0; }
+        .badge { display: inline-block; padding: 2px 10px; background: #67C23A; color: #fff; border-radius: 10px; font-size: 12px; }
+        code { background: #f0f2f5; padding: 2px 6px; border-radius: 3px; color: #d63384; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>Welcome to SpringVulnBoot <span class="badge">English</span></h2>
+    <p>This is a Thymeleaf-rendered server-side page.</p>
+    <p>Current language: <code th:text="${lang}">en</code></p>
+    <hr>
+    <p style="color:#909399;font-size:13px;">
+        Template path: <code>templates/welcome/en/welcome.html</code><br>
+        Try different SSTI payloads to compare behaviors across vuln/secure endpoints.
+    </p>
+</div>
+</body>
+</html>
