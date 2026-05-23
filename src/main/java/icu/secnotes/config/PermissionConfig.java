@@ -74,7 +74,8 @@ public class PermissionConfig {
         "/ipspoofing/**",     // IP伪造漏洞
         "/redos/**",          // ReDoS 正则拒绝服务
         "/spel/**",           // SpEL 表达式注入
-        "/cors/**"            // CORS 配置漏洞
+        "/cors/**",           // CORS 配置漏洞
+        "/zipslip/**"         // ZIP Slip 路径穿越漏洞
     );
 
     /**

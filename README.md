@@ -15,29 +15,29 @@
 ## 2、漏洞地图
 
 
-> 共 **20** 个漏洞分类、**59** 个实验场景
+> 共 **20** 个漏洞分类、**60** 个实验场景
 
 | 模块 | 场景数 | 亮点 |
 |------|:------:|------|
-| SQL 注入 | 8 | Jdbc / MyBatis / 盲注 / 二次注入 |
-| XSS | 3 | 反射 / 存储 / DOM |
+| SQL 注入 | 8 | Jdbc · MyBatis · 盲注 · 二次注入 |
+| XSS | 3 | 反射 · 存储 · DOM |
 | CSRF | 1 | 跨站请求伪造 |
-| 命令执行 | 2 | Runtime / ProcessBuilder |
+| 命令执行 | 2 | Runtime · ProcessBuilder |
 | 批量赋值 | 1 | Mass Assignment |
-| GraphQL | 3 | 字段泄漏 / 越权 / SQLi |
+| GraphQL | 3 | 字段泄漏 · 越权 · SQLi |
 | SSRF | 1 | 服务端请求伪造 |
 | 任意 URL 跳转 | 1 | Open Redirect |
-| 路径穿越 | 1 | 目录穿越 |
+| 路径穿越 | 2 | 目录穿越 · ZIP Slip |
 | 文件上传 | 1 | 不安全上传 |
-| 文件包含 | 1 | 本地/远程包含 |
+| 文件包含 | 1 | 本地 · 远程包含 |
 | 反序列化 | 1 | 不安全反序列化 |
 | SSTI | 1 | Thymeleaf 模板注入 |
-| XML 安全 | 5 | XXE / XPath / 炸弹 / SSRF via XXE / XInclude |
-| 越权漏洞 | 3 | 水平 / 垂直越权 · 未授权 |
-| 身份认证 | 8 | 暴力破解 / 短信 / MFA |
-| JWT | 4 | 弱密钥 / None 算法 / 算法混淆等 |
+| XML 安全 | 5 | XXE · XPath · 炸弹 · SSRF via XXE · XInclude |
+| 越权漏洞 | 3 | 水平越权 · 垂直越权 · 未授权 |
+| 身份认证 | 8 | 暴力破解 · 短信 · MFA |
+| JWT | 4 | 弱密钥 · None 算法 · 算法混淆等 |
 | 组件漏洞 | 7 | Fastjson · Log4j2 · Shiro-550 · XStream… |
-| 配置漏洞 | 4 | 列目录 / Actuator / Swagger / CORS |
+| 配置漏洞 | 4 | 列目录 · Actuator · Swagger · CORS |
 | 其他漏洞 | 5 | SpEL · ReDoS · LDAP · IP 伪造 · 科学计数法 DoS |
 
 
@@ -185,6 +185,8 @@ docker compose up -d --build
 - SSRF漏洞
 - 任意URL跳转
 - 路径穿越漏洞
+  - 路径穿越漏洞
+  - ZIP Slip 漏洞
 - 文件上传漏洞
 - 文件包含漏洞
 - 反序列化漏洞
