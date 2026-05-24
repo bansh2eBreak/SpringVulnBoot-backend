@@ -4,6 +4,9 @@ on:
   push:
     branches: [ "main", "master" ]
     tags: [ "v*.*.*" ]
+    paths-ignore:
+      - 'README.md'
+      - '**.md'
   workflow_dispatch:
 
 env:
