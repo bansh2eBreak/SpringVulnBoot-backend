@@ -27,6 +27,11 @@ server:
   error:
     include-message: always
 
+# Host Header 注入漏洞 - 安全版使用的固定 baseUrl
+# 安全版接口从此处读取，无论客户端 Host 头如何变化都不受影响
+app:
+  base-url: http://127.0.0.1
+
 # MyBatis配置
 mybatis:
   configuration:

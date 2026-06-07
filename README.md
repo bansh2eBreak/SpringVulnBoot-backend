@@ -15,7 +15,7 @@
 ## 2、漏洞地图
 
 
-> 共 **20** 个漏洞分类、**62** 个实验场景
+> 共 **20** 个漏洞分类、**63** 个实验场景
 
 | 模块 | 场景数 | 亮点 |
 |------|:------:|------|
@@ -38,7 +38,7 @@
 | JWT | 4 | 弱密钥 · None 算法 · 算法混淆等 |
 | 组件漏洞 | 7 | Fastjson · Log4j2 · Shiro-550 · XStream… |
 | 配置漏洞 | 4 | 列目录 · Actuator · Swagger · CORS |
-| 其他漏洞 | 7 | SpEL · ReDoS · LDAP · IP 伪造 · 科学计数法 DoS · CRLF 注入 · 点击劫持 |
+| 其他漏洞 | 8 | SpEL · ReDoS · LDAP · IP 伪造 · 科学计数法 DoS · CRLF 注入 · 点击劫持 · Host Header 注入 |
 
 
 ## 3、快速开始
@@ -240,6 +240,7 @@ docker compose up -d --build
   - LDAP注入
   - CRLF注入
   - 点击劫持漏洞
+  - Host Header 注入漏洞
 
 ## 5、效果图展示
 
