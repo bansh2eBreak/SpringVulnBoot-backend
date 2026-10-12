@@ -35,7 +35,7 @@ public class PermissionConfig {
         "/ssti/**",                                     // SSTI 模板注入漏洞（iframe 渲染 HTML，需无认证访问）
         "/crlf/**",                                     // CRLF 注入漏洞（返回 HTML，需无认证访问）
         "/hostHeaderInjection/**",                      // Host Header 注入漏洞（模拟"忘记密码"接口，业务上本就匿名）
-        "/passwordSecurity/**"                          // 密码安全漏洞（模拟"忘记密码"接口，业务上本就匿名）
+        "/cryptoSecurity/**"                            // 加密安全漏洞（模拟"忘记密码"接口，业务上本就匿名）
     );
 
     /**

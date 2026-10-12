@@ -1,4 +1,4 @@
-package icu.secnotes.controller.PasswordSecurity;
+package icu.secnotes.controller.CryptoSecurity;
 
 import icu.secnotes.pojo.Result;
 import icu.secnotes.service.LoginService;
@@ -14,7 +14,7 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 密码安全 - 种子可预测漏洞演示控制器（密码重置 token 可预测 → 账户接管）
+ * 加密安全 - 种子可预测漏洞演示控制器（密码重置 token 可预测 → 账户接管）
  *
  * 漏洞版：用 new Random(System.currentTimeMillis()) 生成 reset token。
  *        java.util.Random 是线性同余生成器（LCG），种子就是毫秒时间戳，
@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *      token 进入"受害人邮箱"，攻击者只能通过预测+爆破拿到。
  */
 @RestController
-@RequestMapping("/passwordSecurity/predictableSeed")
+@RequestMapping("/cryptoSecurity/predictableSeed")
 @Slf4j
 @Tag(name = "种子可预测漏洞", description = "密码重置 token 使用可预测随机数（java.util.Random）导致账户接管")
 public class PredictableSeedController {

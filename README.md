@@ -39,7 +39,7 @@
 | 组件漏洞 | 7 | Fastjson · Log4j2 · Shiro-550 · XStream… |
 | 配置漏洞 | 4 | 列目录 · Actuator · Swagger · CORS |
 | 其他漏洞 | 8 | SpEL · ReDoS · LDAP · IP 伪造 · 科学计数法 DoS · CRLF 注入 · 点击劫持 · Host Header 注入 |
-| 密码安全 | 1 | 可预测随机数（种子可预测）|
+| 加密安全 | 1 | 可预测随机数（种子可预测）|
 
 
 ## 3、快速开始
@@ -242,7 +242,7 @@ docker compose up -d --build
   - CRLF注入
   - 点击劫持漏洞
   - Host Header 注入漏洞
-- 密码安全
+- 加密安全
   - 种子可预测漏洞（可预测随机数）
 
 ## 5、效果图展示
