@@ -35,7 +35,7 @@ public class PermissionConfig {
         "/ssti/**",                                     // SSTI 模板注入漏洞（iframe 渲染 HTML，需无认证访问）
         "/crlf/**",                                     // CRLF 注入漏洞（返回 HTML，需无认证访问）
         "/hostHeaderInjection/**",                      // Host Header 注入漏洞（模拟"忘记密码"接口，业务上本就匿名）
-        "/cryptoSecurity/**"                            // 加密安全漏洞（模拟"忘记密码"接口，业务上本就匿名）
+        "/cryptoSecurity/predictableSeed/**"            // 加密安全-种子可预测（模拟"忘记密码"接口，业务上本就匿名）
     );
 
     /**
@@ -78,7 +78,8 @@ public class PermissionConfig {
         "/redos/**",          // ReDoS 正则拒绝服务
         "/spel/**",           // SpEL 表达式注入
         "/cors/**",           // CORS 配置漏洞
-        "/zipslip/**"         // ZIP Slip 路径穿越漏洞
+        "/zipslip/**",        // ZIP Slip 路径穿越漏洞
+        "/cryptoSecurity/frontendSign/**"  // 加密安全-前端加签被逆向
     );
 
     /**
