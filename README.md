@@ -35,7 +35,7 @@
 | XML 安全 | 5 | XXE · XPath · 炸弹 · SSRF via XXE · XInclude |
 | 越权漏洞 | 3 | 水平越权 · 垂直越权 · 未授权 |
 | 身份认证 | 8 | 暴力破解 · 短信 · MFA |
-| JWT | 4 | 弱密钥 · None 算法 · 算法混淆等 |
+| JWT | 5 | 弱密钥 · 存储敏感信息 · None 算法 · 算法混淆 · jku 远程公钥 |
 | 组件漏洞 | 7 | Fastjson · Log4j2 · Shiro-550 · XStream… |
 | 配置漏洞 | 4 | 列目录 · Actuator · Swagger · CORS |
 | 其他漏洞 | 8 | SpEL · ReDoS · LDAP · IP 伪造 · 科学计数法 DoS · CRLF 注入 · 点击劫持 · Host Header 注入 |
@@ -220,6 +220,7 @@ docker compose up -d --build
   - JWT存储敏感信息
   - JWT None算法漏洞
   - JWT 算法混淆漏洞
+  - JWT jku 远程公钥
 - 组件漏洞
   - Fastjson漏洞
   - Log4j2漏洞

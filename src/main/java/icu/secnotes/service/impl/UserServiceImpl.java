@@ -7,6 +7,7 @@ import icu.secnotes.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -60,5 +61,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userMapper.getAllUsers();
+    }
+
+    @Override
+    public Map<String, Object> selectPayroll(String username) {
+        return userMapper.selectPayroll(username);
     }
 }

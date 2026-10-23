@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -67,5 +68,11 @@ public interface UserMapper {
      */
     @Select("select * from user")
     List<User> getAllUsers();
+
+    /**
+     * jku 工资查询。只取这一课需要的列，避免把 salary 映射进共用的 User 对象。
+     */
+    @Select("select username, name, salary from user where username = #{username}")
+    Map<String, Object> selectPayroll(@Param("username") String username);
 
 }

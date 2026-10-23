@@ -3,6 +3,7 @@ package icu.secnotes.service;
 import icu.secnotes.pojo.PageBean;
 import icu.secnotes.pojo.User;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
     List<User> selectUserById(String id);
@@ -25,4 +26,6 @@ public interface UserService {
 
     // 新增方法：获取所有用户
     List<User> getAllUsers();
+
+    Map<String, Object> selectPayroll(String username);
 }

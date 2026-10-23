@@ -55,7 +55,8 @@ create table if not exists User
         primary key,
     username varchar(50) null,
     name     varchar(50) null,
-    password varchar(50) null
+    password varchar(50) null,
+    salary   int         null comment '月薪，jku 工资查询使用'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 创建MFA密钥表
@@ -107,7 +108,7 @@ INSERT INTO MessageBoard (id, message) VALUES (3, '催更！！！');
 INSERT INTO MessageBoard (id, message) VALUES (4, '<img src=x onmouseover=alert(/xss/)>');
 
 -- 插入测试数据到User表
-INSERT INTO User (id, username, name, password) VALUES (1, 'zhangsan', '张三', '123');
+INSERT INTO User (id, username, name, password, salary) VALUES (1, 'zhangsan', '张三', '123', 8000);
 INSERT INTO User (id, username, name, password) VALUES (2, 'lisi', '李四', '123');
 INSERT INTO User (id, username, name, password) VALUES (3, 'wangwu', '王五', '123');
 INSERT INTO User (id, username, name, password) VALUES (4, 'zhaoliu', '赵六', '123');
@@ -119,6 +120,8 @@ INSERT INTO User (id, username, name, password) VALUES (9, 'duanzhengchun', '段
 INSERT INTO User (id, username, name, password) VALUES (10, 'saodiseng', '扫地僧', '123');
 INSERT INTO User (id, username, name, password) VALUES (11, 'wangyuyan', '王语嫣', '123');
 INSERT INTO User (id, username, name, password) VALUES (12, 'jiumozhi', '鸠摩智', '123');
+-- jku 远程公钥：老板不能登录，只能被伪造令牌查到工资
+INSERT INTO User (id, username, name, password, salary) VALUES (100, 'boss', '王总', NULL, 80000);
 
 -- 创建文章表（用于 UNION 注入演示）
 CREATE TABLE IF NOT EXISTS articles (
