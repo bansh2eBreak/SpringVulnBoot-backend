@@ -181,3 +181,19 @@ CREATE TABLE IF NOT EXISTS logic_negative_order (
     UNIQUE KEY uk_order_no (order_no),
     INDEX idx_user_created (user_id, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='负数下单业务逻辑漏洞演示订单';
+
+-- 业务逻辑漏洞 - 支付回调重复处理
+CREATE TABLE IF NOT EXISTS logic_recharge_order (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL COMMENT '当前靶场登录用户 ID（当前取自 Admin.id）',
+    recharge_no VARCHAR(32) NOT NULL COMMENT '商户充值订单号',
+    amount DECIMAL(12,2) NOT NULL COMMENT '服务端确认的充值金额',
+    status VARCHAR(16) NOT NULL DEFAULT 'PENDING' COMMENT 'PENDING=待支付，PAID=已支付',
+    gateway_transaction_no VARCHAR(64) NULL COMMENT '支付网关交易号',
+    paid_at DATETIME NULL COMMENT '首次支付成功时间',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    UNIQUE KEY uk_recharge_no (recharge_no),
+    UNIQUE KEY uk_gateway_transaction_no (gateway_transaction_no),
+    INDEX idx_recharge_user_created (user_id, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='支付回调重复处理演示充值订单';

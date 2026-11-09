@@ -10,7 +10,8 @@ services:
       - "80:80"
       - "81:81"   # CORS 漏洞演示 - 攻击者模拟站点（与靶场前端端口 80 属于不同 Origin）
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     networks:
       - springvulnboot-network
 
@@ -29,6 +30,12 @@ services:
       - SPRING_DATASOURCE_PASSWORD=Root1234
       - LDAP_URLS=ldap://openldap:389
       - JAVA_OPTS=--add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/actuator/health | grep -q '\"status\":\"UP\"'"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 60s
     depends_on:
       mysql:
         condition: service_healthy
