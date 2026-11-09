@@ -3,6 +3,7 @@ package icu.secnotes.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,4 +18,5 @@ public class Admin {
     private String avatar;
     private LocalDateTime createTime;
     private String role;  // 用户角色：admin-管理员, guest-访客
+    private BigDecimal balance;
 }

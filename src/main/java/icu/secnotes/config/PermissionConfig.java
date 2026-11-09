@@ -81,7 +81,8 @@ public class PermissionConfig {
         "/spel/**",           // SpEL 表达式注入
         "/cors/**",           // CORS 配置漏洞
         "/zipslip/**",        // ZIP Slip 路径穿越漏洞
-        "/cryptoSecurity/frontendSign/**"  // 加密安全-前端加签被逆向
+        "/cryptoSecurity/frontendSign/**", // 加密安全-前端加签被逆向
+        "/businessLogic/**"                // 业务逻辑漏洞
     );
 
     /**

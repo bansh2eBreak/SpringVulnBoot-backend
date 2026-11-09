@@ -22,6 +22,9 @@ INSERT INTO Admin (id, name, username, password, token, role, create_time) VALUE
 INSERT INTO Admin (id, name, username, password, token, role, create_time) VALUES (2, '审计员',   'zhangsan', '123456',   CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)), 'admin', NOW());
 INSERT INTO Admin (id, name, username, password, token, role, create_time) VALUES (3, '访客用户', 'guest',    'guest123', CONCAT('token_', ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)), 'guest', NOW());
 
+-- 业务逻辑漏洞 - 负数下单：当前测试账户的钱包余额
+ALTER TABLE Admin ADD COLUMN balance DECIMAL(12,2) NOT NULL DEFAULT 1000.00 COMMENT '业务逻辑漏洞演示余额';
+
 -- 创建员工信息表（GraphQL 漏洞演示数据源）
 -- id 与 Admin.id 一一对应，GraphQL 查询时 JOIN 两表获取完整信息
 create table if not exists graphql_employee
@@ -139,3 +142,42 @@ INSERT INTO articles (title, author, content) VALUES
 ('Java 安全编码规范', 'admin', '安全编码是软件开发中的重要环节。本文总结了 Java 开发中常见的安全漏洞类型，包括 SQL 注入、XSS、CSRF 等，并提供了相应的防御措施。'),
 ('Docker 容器化实战', 'lisi', 'Docker 是当前最流行的容器化技术。本文将介绍 Docker 的基本概念、常用命令，以及如何使用 Docker Compose 编排多容器应用。'),
 ('Vue.js 前端开发实践', 'zhangsan', 'Vue.js 是一套用于构建用户界面的渐进式 JavaScript 框架。本教程将通过实际案例，讲解 Vue 的核心概念、组件开发和状态管理。');
+
+-- 业务逻辑漏洞 - 优惠券并发超用
+-- 漏洞表没有联合唯一约束：并发“先查后插”可为同一管理员插入多条记录
+CREATE TABLE IF NOT EXISTS logic_coupon_claim_vuln (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    admin_id INT NOT NULL COMMENT '当前靶场管理员 ID',
+    campaign_code VARCHAR(32) NOT NULL COMMENT '活动券码',
+    coupon_name VARCHAR(100) NOT NULL COMMENT '优惠券名称',
+    status VARCHAR(16) NOT NULL DEFAULT 'UNUSED' COMMENT 'UNUSED=未使用',
+    claimed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '领取时间',
+    INDEX idx_admin_campaign (admin_id, campaign_code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='优惠券并发超用漏洞版领取记录';
+
+-- 安全表通过联合唯一约束落实“每人限领一张”的业务规则
+CREATE TABLE IF NOT EXISTS logic_coupon_claim_sec (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    admin_id INT NOT NULL COMMENT '当前靶场管理员 ID',
+    campaign_code VARCHAR(32) NOT NULL COMMENT '活动券码',
+    coupon_name VARCHAR(100) NOT NULL COMMENT '优惠券名称',
+    status VARCHAR(16) NOT NULL DEFAULT 'UNUSED' COMMENT 'UNUSED=未使用',
+    claimed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '领取时间',
+    UNIQUE KEY uk_admin_campaign (admin_id, campaign_code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='优惠券并发超用安全版领取记录';
+
+-- 业务逻辑漏洞 - 负数下单
+-- 单商品订单表。生产环境应额外对 quantity 建立大于 0 的约束。
+CREATE TABLE IF NOT EXISTS logic_negative_order (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL COMMENT '当前靶场登录用户 ID（当前取自 Admin.id）',
+    order_no VARCHAR(32) NOT NULL COMMENT '演示订单号',
+    product_code VARCHAR(32) NOT NULL COMMENT '服务端商品编码',
+    product_name VARCHAR(100) NOT NULL COMMENT '商品名称',
+    unit_price DECIMAL(12,2) NOT NULL COMMENT '服务端商品单价',
+    quantity INT NOT NULL COMMENT '购买数量；漏洞版可被写入负数',
+    total_amount DECIMAL(12,2) NOT NULL COMMENT '订单总金额；漏洞版负数量会产生负金额',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    UNIQUE KEY uk_order_no (order_no),
+    INDEX idx_user_created (user_id, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='负数下单业务逻辑漏洞演示订单';
